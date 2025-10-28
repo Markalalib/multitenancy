@@ -1,241 +1,185 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function LovDetailsForm() {
-  const [formData, setFormData] = useState({
-    LOV_Details_ID: 0,
-    LOV_ID: 1,
-    LOV_Details_Name: "",
-    LOV_Details_Description: "",
-    Effective_From: "",
-    Is_Editable: 1,
-    Effective_To: "",
-    IsData_Changed: 0,
-    Status: 1,
-    Notes: "",
-    User: 1001,
-  });
+export default function LovDetailsGridForm() {
+  const [lovList, setLovList] = useState([]); // Dropdown data
+  const [selectedLovId, setSelectedLovId] = useState("");
+  const [records, setRecords] = useState([]);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? (checked ? 1 : 0) : value,
-    });
-  };
+  // Fetch dropdown list of LOVs
+  useEffect(() => {
+    const fetchLovList = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:5000/api/lov/dropdown?listName=LOV_LIST"
+        );
+        if (res.data && res.data.success) {
+          setLovList(res.data.data);
+        } else {
+          console.error("Unexpected response:", res.data);
+        }
+      } catch (error) {
+        console.error("Error fetching LOV list", error);
+      }
+    };
+    fetchLovList();
+  }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post(
-        "http://localhost:5000/api/lov/lov-details",
-        formData
-      );
-      alert(res.data.message || "LOV Details saved successfully!");
-      console.log("Response:", res.data);
-    } catch (error) {
-      console.error(error);
-      alert("Error saving LOV Details data");
+  // Add a new empty record row
+  const handleAddRecord = () => {
+    if (!selectedLovId) {
+      alert("Please select a List of Value Name first!");
+      return;
     }
+
+    setRecords([
+      ...records,
+      {
+        LOV_Details_ID: 0,
+        LOV_ID: selectedLovId || 0,
+        LOV_Details_Name: "",
+        LOV_Details_Description: "",
+      },
+    ]);
   };
 
-  const handleClear = () => {
-    setFormData({
-      LOV_Details_ID: 0,
-      LOV_ID: 1,
-      LOV_Details_Name: "",
-      LOV_Details_Description: "",
-      Effective_From: "",
-      Is_Editable: 1,
-      Effective_To: "",
+  // Handle grid input change
+  const handleInputChange = (index, field, value) => {
+    const updatedRecords = [...records];
+    updatedRecords[index][field] = value;
+    setRecords(updatedRecords);
+  };
+
+  // Delete a record row
+  const handleDeleteRow = (index) => {
+    setRecords(records.filter((_, i) => i !== index));
+  };
+
+  // Save all records
+  const handleSave = async () => {
+    if (!selectedLovId) {
+      alert("Please select a List of Value Name first!");
+      return;
+    }
+
+    const payload = records.map((rec) => ({
+      ...rec,
+      LOV_ID: selectedLovId,
+      Effective_From: null,
+      Effective_To: null,
+      Is_Editable: 0,
       IsData_Changed: 0,
       Status: 1,
       Notes: "",
       User: 1001,
-    });
+    }));
+
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/lov/lov-details",
+        payload
+      );
+      alert(res.data.message || "LOV Details saved successfully!");
+      setRecords([]);
+    } catch (error) {
+      console.error(error);
+      alert("Error saving LOV Details!");
+    }
   };
 
   return (
-    <div className="container mt-5">
-      <div className="card shadow border-success">
-        <div className="card-header bg-success text-white text-center">
-          <h4>LOV Details Form</h4>
-        </div>
+    <div className="container mt-4">
+      {/* Dropdown */}
+      <div className="mb-3">
+        <label className="form-label fw-semibold">List Of Value Name *</label>
+        <select
+          className="form-select"
+          value={selectedLovId}
+          onChange={(e) => setSelectedLovId(e.target.value)}
+          required
+        >
+          <option value="">-- Select --</option>
+          {lovList.map((lov) => (
+            <option key={lov.Id} value={lov.Id}>
+              {lov.Name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Grid Table */}
+      <div className="card shadow-sm">
         <div className="card-body">
-          <form onSubmit={handleSubmit}>
-            <div className="row g-3">
-              {/* LOV ID */}
-              <div className="col-md-6">
-                <label className="form-label fw-semibold">LOV ID *</label>
-                <input
-                  type="number"
-                  name="LOV_ID"
-                  value={formData.LOV_ID}
-                  onChange={handleChange}
-                  className="form-control"
-                  required
-                />
-              </div>
+          <div className="d-flex justify-content-between mb-3">
+            <button className="btn btn-primary" onClick={handleAddRecord}>
+              + Add New Record
+            </button>
+            <button className="btn btn-success" onClick={handleSave}>
+              💾 Save
+            </button>
+          </div>
 
-              {/* LOV Details Name */}
-              <div className="col-md-6">
-                <label className="form-label fw-semibold">
-                  LOV Details Name *
-                </label>
-                <input
-                  type="text"
-                  name="LOV_Details_Name"
-                  value={formData.LOV_Details_Name}
-                  onChange={handleChange}
-                  placeholder="Enter Details Name"
-                  className="form-control"
-                  required
-                />
-              </div>
-
-              {/* Description */}
-              <div className="col-12">
-                <label className="form-label fw-semibold">
-                  LOV Details Description
-                </label>
-                <input
-                  type="text"
-                  name="LOV_Details_Description"
-                  value={formData.LOV_Details_Description}
-                  onChange={handleChange}
-                  placeholder="Enter Description"
-                  className="form-control"
-                />
-              </div>
-
-              {/* Effective From */}
-              <div className="col-md-6">
-                <label className="form-label fw-semibold">
-                  Effective From *
-                </label>
-                <input
-                  type="date"
-                  name="Effective_From"
-                  value={formData.Effective_From}
-                  onChange={handleChange}
-                  className="form-control"
-                  required
-                />
-              </div>
-
-              {/* Effective To */}
-              <div className="col-md-6">
-                <label className="form-label fw-semibold">Effective To *</label>
-                <input
-                  type="date"
-                  name="Effective_To"
-                  value={formData.Effective_To}
-                  onChange={handleChange}
-                  className="form-control"
-                  required
-                />
-              </div>
-
-              {/* Editable */}
-              <div className="col-md-6 d-flex align-items-center">
-                <div className="form-check mt-3">
-                  <input
-                    type="checkbox"
-                    name="Is_Editable"
-                    checked={formData.Is_Editable === 1}
-                    onChange={handleChange}
-                    className="form-check-input"
-                    id="isEditable"
-                  />
-                  <label
-                    htmlFor="isEditable"
-                    className="form-check-label fw-semibold"
-                  >
-                    Is Editable?
-                  </label>
-                </div>
-              </div>
-
-              {/* Data Changed */}
-              <div className="col-md-6 d-flex align-items-center">
-                <div className="form-check mt-3">
-                  <input
-                    type="checkbox"
-                    name="IsData_Changed"
-                    checked={formData.IsData_Changed === 1}
-                    onChange={handleChange}
-                    className="form-check-input"
-                    id="isDataChanged"
-                  />
-                  <label
-                    htmlFor="isDataChanged"
-                    className="form-check-label fw-semibold"
-                  >
-                    Data Changed?
-                  </label>
-                </div>
-              </div>
-
-              {/* Status */}
-              <div className="col-md-6 d-flex align-items-center">
-                <div className="form-check mt-3">
-                  <input
-                    type="checkbox"
-                    name="Status"
-                    checked={formData.Status === 1}
-                    onChange={handleChange}
-                    className="form-check-input"
-                    id="status"
-                  />
-                  <label
-                    htmlFor="status"
-                    className="form-check-label fw-semibold"
-                  >
-                    Active?
-                  </label>
-                </div>
-              </div>
-
-              {/* Notes */}
-              <div className="col-12">
-                <label className="form-label fw-semibold">Notes</label>
-                <textarea
-                  name="Notes"
-                  value={formData.Notes}
-                  onChange={handleChange}
-                  placeholder="Enter Notes"
-                  className="form-control"
-                  rows="3"
-                ></textarea>
-              </div>
-
-              {/* User */}
-              <div className="col-md-6">
-                <label className="form-label fw-semibold">User ID</label>
-                <input
-                  type="number"
-                  name="User"
-                  value={formData.User}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-              </div>
-
-              {/* Buttons */}
-              <div className="col-12 d-flex justify-content-end mt-3 gap-2">
-                <button type="submit" className="btn btn-success">
-                  Save LOV Details
-                </button>
-                <button
-                  type="button"
-                  onClick={handleClear}
-                  className="btn btn-secondary"
-                >
-                  Clear
-                </button>
-              </div>
-            </div>
-          </form>
+          <table className="table table-bordered table-striped">
+            <thead className="table-primary text-center">
+              <tr>
+                <th>LOV Details Name</th>
+                <th>LOV Details Description</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {records.length > 0 ? (
+                records.map((record, index) => (
+                  <tr key={index}>
+                    <td>
+                      <input
+                        type="text"
+                        value={record.LOV_Details_Name}
+                        onChange={(e) =>
+                          handleInputChange(
+                            index,
+                            "LOV_Details_Name",
+                            e.target.value
+                          )
+                        }
+                        className="form-control"
+                        placeholder="Enter Name"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        value={record.LOV_Details_Description}
+                        onChange={(e) =>
+                          handleInputChange(
+                            index,
+                            "LOV_Details_Description",
+                            e.target.value
+                          )
+                        }
+                        className="form-control"
+                        placeholder="Enter Description"
+                      />
+                    </td>
+                    <td className="text-center">
+                      <button
+                        className="btn btn-outline-danger btn-sm"
+                        onClick={() => handleDeleteRow(index)}
+                      >
+                        ✖
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3" className="text-center text-muted">
+                    No records added yet.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

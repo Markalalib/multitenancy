@@ -8,13 +8,8 @@ export default function LovForm() {
     LOV_Description: "",
     Module_ID: 0,
     Tenant_ID: 0,
-    Is_Editable: 1,
-    Effective_From: "",
-    Effective_To: "",
-    IsData_Changed: 0,
     Status: 1,
     Notes: "",
-    User: 1001,
   });
 
   const [moduleList, setModuleList] = useState([]);
@@ -43,19 +38,35 @@ export default function LovForm() {
   }, []);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: type === "checkbox" ? (checked ? 1 : 0) : value,
+      [name]: value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const payload = {
+      LOV_ID: formData.LOV_ID || 0,
+      LOV_Name: formData.LOV_Name,
+      LOV_Description: formData.LOV_Description || null,
+      Module_ID: formData.Module_ID,
+      Tenant_ID: formData.Tenant_ID,
+      Status: formData.Status,
+      Is_Editable: 0, // 🔹 Always set to 0
+      Effective_From: null,
+      Effective_To: null,
+      IsData_Changed: null,
+      Notes: formData.Notes || null,
+      User: null,
+    };
+
     try {
       const res = await axios.post(
         "http://localhost:5000/api/lov/lov-names",
-        formData
+        payload
       );
       alert(res.data.message || "LOV saved successfully!");
       console.log("Response:", res.data);
@@ -72,71 +83,55 @@ export default function LovForm() {
       LOV_Description: "",
       Module_ID: 0,
       Tenant_ID: 0,
-      Is_Editable: 1,
-      Effective_From: "",
-      Effective_To: "",
-      IsData_Changed: 0,
       Status: 1,
       Notes: "",
-      User: 1001,
     });
   };
 
   return (
-    <div className="container mt-5">
-      <div className="card shadow border-primary">
-        <div className="card-header bg-primary text-white text-center">
-          <h4>LOV Configuration</h4>
+    <div className="container mt-4">
+      <div className="card shadow border-0">
+        <div
+          className="card-header bg-gradient text-white"
+          style={{ backgroundColor: "#6C63FF" }}
+        >
+          <h5 className="mb-0 text-center">Create / Edit Values Details</h5>
         </div>
-        <div className="card-body">
+        <div className="card-body p-4">
           <form onSubmit={handleSubmit}>
             <div className="row g-3">
-              {/* LOV Name */}
-              <div className="col-md-6">
-                <label className="form-label fw-semibold">LOV Name *</label>
+              {/* List of Value Name */}
+              <div className="col-12">
+                <label className="form-label fw-semibold">
+                  List Of Value Name *
+                </label>
                 <input
                   type="text"
                   name="LOV_Name"
                   value={formData.LOV_Name}
                   onChange={handleChange}
-                  placeholder="Enter LOV Name"
+                  placeholder="Enter Value Name"
                   className="form-control"
                   required
                 />
               </div>
 
               {/* Description */}
-              <div className="col-md-6">
-                <label className="form-label fw-semibold">Description</label>
-                <input
-                  type="text"
+              <div className="col-12">
+                <label className="form-label fw-semibold">
+                  List Of Value Description
+                </label>
+                <textarea
                   name="LOV_Description"
                   value={formData.LOV_Description}
                   onChange={handleChange}
                   placeholder="Enter Description"
                   className="form-control"
-                />
+                  rows="2"
+                ></textarea>
               </div>
 
-              {/* 🔽 Module Dropdown */}
-              <div className="col-md-6">
-                <label className="form-label fw-semibold">Module *</label>
-                <select
-                  name="Module_ID"
-                  value={formData.Module_ID}
-                  onChange={handleChange}
-                  className="form-select"
-                  required
-                >
-                  {moduleList.map((m) => (
-                    <option key={m.Id} value={m.Id}>
-                      {m.Name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* 🔽 Tenant Dropdown */}
+              {/* Tenant & Module */}
               <div className="col-md-6">
                 <label className="form-label fw-semibold">Tenant *</label>
                 <select
@@ -146,6 +141,7 @@ export default function LovForm() {
                   className="form-select"
                   required
                 >
+                  <option value={0}>-- Select Tenant --</option>
                   {tenantList.map((t) => (
                     <option key={t.Id} value={t.Id}>
                       {t.Name}
@@ -154,90 +150,37 @@ export default function LovForm() {
                 </select>
               </div>
 
-              {/* Editable */}
-              <div className="col-md-6 d-flex align-items-center">
-                <div className="form-check mt-3">
-                  <input
-                    type="checkbox"
-                    name="Is_Editable"
-                    checked={formData.Is_Editable === 1}
-                    onChange={handleChange}
-                    className="form-check-input"
-                    id="isEditable"
-                  />
-                  <label
-                    htmlFor="isEditable"
-                    className="form-check-label fw-semibold"
-                  >
-                    Is Editable?
-                  </label>
-                </div>
-              </div>
-
-              {/* Effective Dates */}
               <div className="col-md-6">
-                <label className="form-label fw-semibold">
-                  Effective From *
-                </label>
-                <input
-                  type="date"
-                  name="Effective_From"
-                  value={formData.Effective_From}
+                <label className="form-label fw-semibold">Module *</label>
+                <select
+                  name="Module_ID"
+                  value={formData.Module_ID}
                   onChange={handleChange}
-                  className="form-control"
+                  className="form-select"
                   required
-                />
+                >
+                  <option value={0}>-- Select Module --</option>
+                  {moduleList.map((m) => (
+                    <option key={m.Id} value={m.Id}>
+                      {m.Name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
+              {/* Status */}
               <div className="col-md-6">
-                <label className="form-label fw-semibold">Effective To *</label>
-                <input
-                  type="date"
-                  name="Effective_To"
-                  value={formData.Effective_To}
+                <label className="form-label fw-semibold">Status *</label>
+                <select
+                  name="Status"
+                  value={formData.Status}
                   onChange={handleChange}
-                  className="form-control"
+                  className="form-select"
                   required
-                />
-              </div>
-
-              {/* Flags */}
-              <div className="col-md-6 d-flex align-items-center">
-                <div className="form-check mt-3">
-                  <input
-                    type="checkbox"
-                    name="IsData_Changed"
-                    checked={formData.IsData_Changed === 1}
-                    onChange={handleChange}
-                    className="form-check-input"
-                    id="isDataChanged"
-                  />
-                  <label
-                    htmlFor="isDataChanged"
-                    className="form-check-label fw-semibold"
-                  >
-                    Data Changed?
-                  </label>
-                </div>
-              </div>
-
-              <div className="col-md-6 d-flex align-items-center">
-                <div className="form-check mt-3">
-                  <input
-                    type="checkbox"
-                    name="Status"
-                    checked={formData.Status === 1}
-                    onChange={handleChange}
-                    className="form-check-input"
-                    id="status"
-                  />
-                  <label
-                    htmlFor="status"
-                    className="form-check-label fw-semibold"
-                  >
-                    Active?
-                  </label>
-                </div>
+                >
+                  <option value={1}>Active</option>
+                  <option value={0}>Inactive</option>
+                </select>
               </div>
 
               {/* Notes */}
@@ -247,33 +190,21 @@ export default function LovForm() {
                   name="Notes"
                   value={formData.Notes}
                   onChange={handleChange}
-                  placeholder="Enter Notes"
+                  placeholder="Enter notes..."
                   className="form-control"
-                  rows="4"
+                  rows="2"
                 ></textarea>
-              </div>
-
-              {/* User */}
-              <div className="col-md-6">
-                <label className="form-label fw-semibold">User ID</label>
-                <input
-                  type="number"
-                  name="User"
-                  value={formData.User}
-                  onChange={handleChange}
-                  className="form-control"
-                />
               </div>
 
               {/* Buttons */}
               <div className="col-12 d-flex justify-content-end mt-3 gap-2">
-                <button type="submit" className="btn btn-primary">
-                  Save LOV
+                <button type="submit" className="btn btn-primary px-4">
+                  Save
                 </button>
                 <button
                   type="button"
                   onClick={handleClear}
-                  className="btn btn-secondary"
+                  className="btn btn-light border px-4"
                 >
                   Clear
                 </button>
