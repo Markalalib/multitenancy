@@ -51,7 +51,7 @@ const lovRepo = {
     }
   },
 
-  // 🔹 Insert or Update LOV Details
+  // Insert or Update LOV Details
   insertOrUpdateLovDetails: async (lovDetailsData) => {
     try {
       const {
