@@ -28,7 +28,7 @@ export default function LovDetailsGridForm() {
   // Add a new empty record row
   const handleAddRecord = () => {
     if (!selectedLovId) {
-      alert("Please select a List of Value Name first!");
+      alert("⚠️ Please select a List Of Value Name first!");
       return;
     }
 
@@ -58,7 +58,14 @@ export default function LovDetailsGridForm() {
   // Save all records
   const handleSave = async () => {
     if (!selectedLovId) {
-      alert("Please select a List of Value Name first!");
+      alert("⚠️ Please select a List Of Value Name!");
+      return;
+    }
+
+    // Validate required fields
+    const emptyName = records.some((rec) => !rec.LOV_Details_Name.trim());
+    if (emptyName) {
+      alert("⚠️ Please fill in all required LOV Details Name fields!");
       return;
     }
 
@@ -79,11 +86,11 @@ export default function LovDetailsGridForm() {
         "http://localhost:5000/api/lov/lov-details",
         payload
       );
-      alert(res.data.message || "LOV Details saved successfully!");
+      alert(res.data.message || "✅ LOV Details saved successfully!");
       setRecords([]);
     } catch (error) {
       console.error(error);
-      alert("Error saving LOV Details!");
+      alert("❌ Error saving LOV Details!");
     }
   };
 
@@ -91,14 +98,15 @@ export default function LovDetailsGridForm() {
     <div className="container mt-4">
       {/* Dropdown */}
       <div className="mb-3">
-        <label className="form-label fw-semibold">List Of Value Name *</label>
+        <label className="form-label fw-semibold">
+          List Of Value Name <span className="text-danger">*</span>
+        </label>
         <select
           className="form-select"
           value={selectedLovId}
           onChange={(e) => setSelectedLovId(e.target.value)}
           required
         >
-          <option value="">-- Select --</option>
           {lovList.map((lov) => (
             <option key={lov.Id} value={lov.Id}>
               {lov.Name}
@@ -122,7 +130,9 @@ export default function LovDetailsGridForm() {
           <table className="table table-bordered table-striped">
             <thead className="table-primary text-center">
               <tr>
-                <th>LOV Details Name</th>
+                <th>
+                  LOV Details Name <span className="text-danger">*</span>
+                </th>
                 <th>LOV Details Description</th>
                 <th>Action</th>
               </tr>
@@ -144,6 +154,7 @@ export default function LovDetailsGridForm() {
                         }
                         className="form-control"
                         placeholder="Enter Name"
+                        required
                       />
                     </td>
                     <td>
