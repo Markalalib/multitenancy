@@ -107,7 +107,7 @@ const lovController = {
       const { listName } = req.query;
       const result = await lovService.getDropdownData(listName);
 
-      console.log("💡 getDropdownData Controller Result:", result);
+      console.log(" getDropdownData Controller Result:", result);
 
       if (result.success) {
         res.status(200).json(result);
