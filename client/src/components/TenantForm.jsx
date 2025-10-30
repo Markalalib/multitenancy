@@ -1,9 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import ReactCountryFlag from "react-country-flag";
-import { getCode } from "country-list";
-import PhoneInput from "react-phone-input-2";
-import 'react-phone-input-2/lib/bootstrap.css';
 
 export default function TenantForm() {
   const [formData, setFormData] = useState({
@@ -32,25 +28,17 @@ export default function TenantForm() {
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
-    if (name === "p_Tenant_ZipCode" || name === "p_Max_Plant_Count") {
-      // Numbers only, for zipcode and count
-      setFormData({ ...formData, [name]: value.replace(/\D/g, "") });
-    } else if (name === "p_Tenant_Fax") {
-      // Fax: numbers, spaces, dashes allowed
-      setFormData({ ...formData, [name]: value.replace(/[^0-9 -]/g, "") });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: type === "checkbox" ? (checked ? 1 : 0)
-          : type === "file" ? files[0]
-          : value
-      });
-    }
-  };
-
-  // For react-phone-input-2 fields:
-  const handlePhoneInput = (val, country, e, field) => {
-    setFormData({ ...formData, [field]: val });
+    setFormData({
+      ...formData,
+      [name]:
+        type === "checkbox"
+          ? checked
+            ? 1
+            : 0
+          : type === "file"
+          ? files[0]
+          : value,
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -100,9 +88,8 @@ export default function TenantForm() {
           <h4>Tenant Form</h4>
         </div>
         <div className="card-body">
-          <form onSubmit={handleSubmit} autoComplete="off">
+          <form onSubmit={handleSubmit}>
             <div className="row g-3">
-
               {/* Tenant Name */}
               <div className="col-md-6">
                 <label className="form-label fw-semibold">Tenant Name *</label>
@@ -113,7 +100,6 @@ export default function TenantForm() {
                   onChange={handleChange}
                   placeholder="Enter Tenant Name"
                   className="form-control"
-                  required
                 />
               </div>
 
@@ -140,7 +126,6 @@ export default function TenantForm() {
                   onChange={handleChange}
                   placeholder="Street / Area / Landmark"
                   className="form-control"
-                  required
                 />
               </div>
 
@@ -157,32 +142,17 @@ export default function TenantForm() {
                 />
               </div>
 
-              {/* Country WITH FLAG */}
+              {/* Country */}
               <div className="col-md-6">
                 <label className="form-label fw-semibold">Country *</label>
-                <div className="d-flex align-items-center">
-                  <input
-                    type="text"
-                    name="p_Tenant_Country"
-                    value={formData.p_Tenant_Country}
-                    onChange={handleChange}
-                    placeholder="Enter Country"
-                    className="form-control me-2"
-                    required
-                  />
-                  {formData.p_Tenant_Country && getCode(formData.p_Tenant_Country.trim()) && (
-                    <ReactCountryFlag
-                      countryCode={getCode(formData.p_Tenant_Country.trim())}
-                      svg
-                      style={{
-                        width: "2em",
-                        height: "2em",
-                        borderRadius: "3px"
-                      }}
-                      title={formData.p_Tenant_Country}
-                    />
-                  )}
-                </div>
+                <input
+                  type="text"
+                  name="p_Tenant_Country"
+                  value={formData.p_Tenant_Country}
+                  onChange={handleChange}
+                  placeholder="Enter Country"
+                  className="form-control"
+                />
               </div>
 
               {/* State */}
@@ -195,7 +165,6 @@ export default function TenantForm() {
                   onChange={handleChange}
                   placeholder="Enter State"
                   className="form-control"
-                  required
                 />
               </div>
 
@@ -209,68 +178,50 @@ export default function TenantForm() {
                   onChange={handleChange}
                   placeholder="Enter Zipcode"
                   className="form-control"
-                  pattern="\d{4,10}"
-                  title="Enter only numbers"
-                  maxLength={10}
                 />
               </div>
 
-              {/* Primary Phone */}
+              {/* Phone Fields */}
               <div className="col-md-6">
-                <label className="form-label fw-semibold">Primary Phone *</label>
-                <PhoneInput
-                  country={'in'}
-                  inputProps={{
-                    name: 'p_Tenant_Phone1',
-                    required: true,
-                    className: "form-control",
-                  }}
+                <label className="form-label fw-semibold">
+                  Primary Phone *
+                </label>
+                <input
+                  type="text"
+                  name="p_Tenant_Phone1"
                   value={formData.p_Tenant_Phone1}
-                  onChange={(val, country, e) =>
-                    handlePhoneInput(val, country, e, "p_Tenant_Phone1")
-                  }
-                  inputClass="w-100"
-                  enableAreaCodes
+                  onChange={handleChange}
+                  placeholder="Enter Phone"
+                  className="form-control"
                 />
               </div>
 
-              {/* Office Phone */}
               <div className="col-md-6">
                 <label className="form-label fw-semibold">Office Phone</label>
-                <PhoneInput
-                  country={'in'}
-                  inputProps={{
-                    name: 'p_Tenant_Phone2',
-                    className: "form-control",
-                  }}
+                <input
+                  type="text"
+                  name="p_Tenant_Phone2"
                   value={formData.p_Tenant_Phone2}
-                  onChange={(val, country, e) =>
-                    handlePhoneInput(val, country, e, "p_Tenant_Phone2")
-                  }
-                  inputClass="w-100"
-                  enableAreaCodes
+                  onChange={handleChange}
+                  placeholder="Enter Office Phone"
+                  className="form-control"
                 />
               </div>
 
-              {/* Alternate Phone */}
               <div className="col-md-6">
-                <label className="form-label fw-semibold">Alternate Phone</label>
-                <PhoneInput
-                  country={'in'}
-                  inputProps={{
-                    name: 'p_Tenant_Phone3',
-                    className: "form-control",
-                  }}
+                <label className="form-label fw-semibold">
+                  Alternate Phone
+                </label>
+                <input
+                  type="text"
+                  name="p_Tenant_Phone3"
                   value={formData.p_Tenant_Phone3}
-                  onChange={(val, country, e) =>
-                    handlePhoneInput(val, country, e, "p_Tenant_Phone3")
-                  }
-                  inputClass="w-100"
-                  enableAreaCodes
+                  onChange={handleChange}
+                  placeholder="Enter Alternate Phone"
+                  className="form-control"
                 />
               </div>
 
-              {/* Fax */}
               <div className="col-md-6">
                 <label className="form-label fw-semibold">Fax</label>
                 <input
@@ -278,11 +229,8 @@ export default function TenantForm() {
                   name="p_Tenant_Fax"
                   value={formData.p_Tenant_Fax}
                   onChange={handleChange}
-                  placeholder="Format: 12345 67890"
+                  placeholder="Enter Fax Number"
                   className="form-control"
-                  pattern="[\d -]+"
-                  maxLength={20}
-                  title="Numbers, spaces, and dashes allowed"
                 />
               </div>
 
@@ -296,7 +244,6 @@ export default function TenantForm() {
                   onChange={handleChange}
                   placeholder="Enter Email"
                   className="form-control"
-                  required
                 />
               </div>
 
@@ -304,7 +251,7 @@ export default function TenantForm() {
               <div className="col-md-6">
                 <label className="form-label fw-semibold">Website</label>
                 <input
-                  type="url"
+                  type="text"
                   name="p_Tenant_Website"
                   value={formData.p_Tenant_Website}
                   onChange={handleChange}
@@ -321,7 +268,6 @@ export default function TenantForm() {
                   name="p_Tenant_Logo"
                   onChange={handleChange}
                   className="form-control"
-                  accept="image/*"
                 />
               </div>
 
@@ -349,8 +295,6 @@ export default function TenantForm() {
                   onChange={handleChange}
                   placeholder="Enter Max Plant Count"
                   className="form-control"
-                  min={0}
-                  max={99999}
                 />
               </div>
 

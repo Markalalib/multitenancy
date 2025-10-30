@@ -7,10 +7,11 @@ export default function Sidebar({ setPage }) {
   const [openSubModules, setOpenSubModules] = useState({});
 
 
+  console.log(menuData)
   useEffect(() => {
     const fetchMenuData = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/menu/menus");
+        const res = await axios.get("http://localhost:5000/api/menus/menus");
         if (res.data.success) {
           const grouped = {};
 

@@ -118,6 +118,12 @@ const tenantRepository = {
       ORDER BY T.Cdate DESC;
     `);
     return rows;
+  },
+
+  // 5. Get menu structure from stored procedure (NO arguments)
+  getSystemMenu: async () => {
+    const [rows] = await db.query("CALL SP_GetSystemMenu()");
+    return rows[0];
   }
 };
 
