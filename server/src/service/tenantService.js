@@ -1,39 +1,49 @@
-const lovRepo = require("../repository/lovRepo");
+const tenantRepository = require('../repository/tenantRepository');
 
-const lovService = {
-  // 🔹 Insert or Update LOV Master
-  insertOrUpdateLov: async (lovData) => {
+const tenantService = {
+  // Insert or update tenant
+  insertOrUpdateTenant: async (tenantData) => {
     try {
-      // Basic validation
-      if (!lovData.LOV_Name) {
-        throw new Error("LOV_Name is required");
-      }
-
-      // Call repository
-      const result = await lovRepo.insertOrUpdateLov(lovData);
+      const result = await tenantRepository.insertUpdateTenant(tenantData);
       return result;
     } catch (err) {
-      console.error("❌ insertOrUpdateLov Service Error:", err.message);
+      console.error("❌ insertOrUpdateTenant Service Error:", err.message);
       return { success: false, message: err.message };
     }
   },
 
-  // 🔹 Insert or Update LOV Details
-  insertOrUpdateLovDetails: async (lovDetailsData) => {
+  // Get all tenant names (for dropdown)
+  getAllTenantNames: async () => {
     try {
-      // Validation
-      if (!lovDetailsData.LOV_Details_Name)
-        throw new Error("LOV_Details_Name is required");
-      if (!lovDetailsData.LOV_ID) throw new Error("LOV_ID is required");
-
-      // Call repository
-      const result = await lovRepo.insertOrUpdateLovDetails(lovDetailsData);
-      return result;
+      const names = await tenantRepository.getAllTenantNames();
+      return names;
     } catch (err) {
-      console.error("❌ insertOrUpdateLovDetails Service Error:", err.message);
-      return { success: false, message: err.message };
+      console.error("❌ getAllTenantNames Service Error:", err.message);
+      throw err;
     }
   },
+
+  // Get filtered tenants via stored procedure
+  getFilteredTenants: async (filterParams) => {
+    try {
+      const tenants = await tenantRepository.getFilteredTenants(filterParams);
+      return tenants;
+    } catch (err) {
+      console.error("❌ getFilteredTenants Service Error:", err.message);
+      throw err;
+    }
+  },
+
+  // Get ALL columns for tenant master grid (for the big UI table)
+  getAllTenantFullGrid: async () => {
+    try {
+      const rows = await tenantRepository.getAllTenantFullGrid();
+      return rows;
+    } catch (err) {
+      console.error("❌ getAllTenantFullGrid Service Error:", err.message);
+      throw err;
+    }
+  }
 };
 
-module.exports = lovService;
+module.exports = tenantService;
