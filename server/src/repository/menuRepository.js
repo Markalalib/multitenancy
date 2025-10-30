@@ -1,6 +1,6 @@
 const db = require("../config/dbConfig");
 
-const menuRepo = {
+const menuRepository = {
     getMenu: async () => {
         try {
             const query = "CALL SP_GetSystemMenu();";
@@ -12,4 +12,4 @@ const menuRepo = {
         }
     },
 };
-module.exports = menuRepo;
+module.exports = menuRepository;

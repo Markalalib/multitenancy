@@ -1,14 +1,11 @@
 const lovService = require("../service/lovService");
 
 const lovController = {
-  // Insert or Update LOV Master
+  // Insert or update LOV Master
   insertOrUpdateLov: async (req, res) => {
     try {
       const lovData = req.body;
-
       const result = await lovService.insertOrUpdateLov(lovData);
-      console.log("💡 insertOrUpdateLov Controller Result:", result);
-
       if (result.success) {
         res.status(200).json(result);
       } else {
@@ -16,76 +13,51 @@ const lovController = {
       }
     } catch (err) {
       console.error("❌ insertOrUpdateLov Controller Error:", err.message);
-      res
-        .status(500)
-        .json({ success: false, message: "Internal Server Error" });
+      res.status(500).json({ success: false, message: "Internal Server Error" });
     }
   },
 
-  // Insert or Update LOV Details
+  // Insert or update multiple LOV Details (or just one)
   insertOrUpdateLovDetails: async (req, res) => {
     try {
-      // Ensure request body is always an array
-      const lovDetailsArray = Array.isArray(req.body) ? req.body : [req.body];
+      // Accept both array and single object
+      const detailsArray = Array.isArray(req.body) ? req.body : [req.body];
       const results = [];
       const errors = [];
 
-      // Iterate over all records
-      for (const [index, lov] of lovDetailsArray.entries()) {
-        const {
-          LOV_Details_ID,
-          LOV_ID,
-          LOV_Details_Name,
-          LOV_Details_Description,
-          Effective_From,
-          Effective_To,
-          Is_Editable,
-          IsData_Changed,
-          Status,
-          Notes,
-          User,
-        } = lov;
-
-        // ✅ Basic validation
-        if (!LOV_ID || !LOV_Details_Name) {
-          errors.push({
-            index,
-            err: "LOV_ID and LOV_Details_Name are required.",
-            data: lov,
-          });
-          continue;
-        }
-
+      for (const [index, detail] of detailsArray.entries()) {
         try {
-          // Call your service
-          const result = await lovService.insertOrUpdateLovDetails(lov);
-
-          if (!result.success) {
+          if (!detail.LOV_ID || !detail.LOV_Details_Name) {
             errors.push({
               index,
-              err: result.message || "Insert/Update failed at service layer.",
-              data: lov,
+              message: "LOV_ID and LOV_Details_Name are required",
+              data: detail,
             });
             continue;
           }
-
-          // Success case
-          results.push({ ...lov, dbresult: result });
+          const result = await lovService.insertOrUpdateLovDetails(detail);
+          if (result.success) {
+            results.push({ ...detail, dbResult: result });
+          } else {
+            errors.push({
+              index,
+              message: result.message || "Insert/Update failed in service layer.",
+              data: detail,
+            });
+          }
         } catch (err) {
-          console.error(` Error at record ${index}:`, err.message);
-          errors.push({ index, err: err.message, data: lov });
+          console.error(`❌ Error at record ${index}:`, err.message);
+          errors.push({ index, message: err.message, data: detail });
         }
       }
 
-      // ✅ Final summary response
       res.status(errors.length ? 207 : 201).json({
         success: errors.length === 0,
-        message:
-          errors.length === 0
-            ? "All LOV Details inserted/updated successfully."
-            : "Partial success — some LOV Details failed.",
+        message: errors.length === 0
+          ? "All LOV Details inserted/updated successfully."
+          : "Partial success — some LOV Details failed.",
         summary: {
-          total: lovDetailsArray.length,
+          total: detailsArray.length,
           inserted: results.length,
           failed: errors.length,
         },
@@ -93,7 +65,7 @@ const lovController = {
         failedLovDetails: errors,
       });
     } catch (err) {
-      console.error(" insertOrUpdateLovDetails Controller Error:", err);
+      console.error("❌ insertOrUpdateLovDetails Controller Error:", err.message);
       res.status(500).json({
         success: false,
         message: "Server error occurred during LOV Details insertion/updation.",
@@ -102,13 +74,26 @@ const lovController = {
     }
   },
 
+  // Get dropdown/status options (using direct repo call or service)
+  getStatusOptions: async (req, res) => {
+    try {
+      const result = await lovService.getStatusOptions();
+      if (result.success) {
+        res.status(200).json(result);
+      } else {
+        res.status(400).json(result);
+      }
+    } catch (err) {
+      console.error("❌ getStatusOptions Controller Error:", err.message);
+      res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+  },
+
+  // Get dropdown list via a custom listName param and SP
   getDropdownData: async (req, res) => {
     try {
       const { listName } = req.query;
       const result = await lovService.getDropdownData(listName);
-
-      console.log(" getDropdownData Controller Result:", result);
-
       if (result.success) {
         res.status(200).json(result);
       } else {
@@ -116,11 +101,9 @@ const lovController = {
       }
     } catch (err) {
       console.error("❌ getDropdownData Controller Error:", err.message);
-      res
-        .status(500)
-        .json({ success: false, message: "Internal Server Error" });
+      res.status(500).json({ success: false, message: "Internal Server Error" });
     }
-  },
+  }
 };
 
 module.exports = lovController;

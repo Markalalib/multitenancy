@@ -2,29 +2,30 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const db = require("./src/config/dbConfig");
+// ====== MIDDLEWARE ======
 
+// Enable CORS for your frontend dev server
 app.use(
   cors({
-    origin: ["http://localhost:5173"], // frontend URL
+    origin: ["http://localhost:5173"],  
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 
+// Parse JSON bodies
 app.use(express.json());
 
-// Tenant routes
+// ====== ROUTES (PLURALIZED, REST-STYLE) ======
 const tenantRoutes = require("./src/routes/tenantRoutes");
-app.use("/api/tenant", tenantRoutes);
-// Menu routes
 const menuRoutes = require("./src/routes/menuRoutes");
-app.use("/api/menu", menuRoutes);
-// LOV routes
 const lovRoutes = require("./src/routes/lovRoutes");
+
+app.use("/api/tenants", tenantRoutes);
+app.use("/api/menus", menuRoutes);
 app.use("/api/lov", lovRoutes);
 
-// Start the server
-const PORT = process.env.PORT || 3000;
-
+// ====== SERVER STARTUP ======
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`server running http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
