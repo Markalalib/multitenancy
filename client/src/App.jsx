@@ -4,9 +4,12 @@ import Sidebar from "./components/Sidebar";
 import TenantPage from "./pages/Tenants";
 import LovPage from "./pages/LovPage";
 import LovDetailsPage from "./pages/LovDetailsPage";
+import LoginPage from "./pages/Loginpage"; // ✅ import your login page
+
 
 export default function App() {
-  const [page, setPage] = useState(""); // will hold Function_Action like "/tenant" or "/list-of-values"
+  const [page, setPage] = useState(""); // holds which page is open
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // ✅ track login state
 
   const renderPage = () => {
     switch (page) {
@@ -14,7 +17,6 @@ export default function App() {
         return <TenantPage />;
       case "/list-of-values":
         return <LovPage />;
-      // add more mappings below
       case "/list-of-value-detail":
         return <LovDetailsPage />;
       default:
@@ -26,6 +28,16 @@ export default function App() {
     }
   };
 
+  // ✅ If user not logged in, show login page first
+  if (!isLoggedIn) {
+    return (
+      <LoginPage
+        onLoginSuccess={() => setIsLoggedIn(true)} // callback when login succeeds
+      />
+    );
+  }
+
+  // ✅ If logged in, show main dashboard
   return (
     <div className="d-flex">
       {/* Sidebar */}
