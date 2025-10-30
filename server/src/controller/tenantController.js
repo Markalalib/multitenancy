@@ -54,6 +54,18 @@ const tenantController = {
       console.error("❌ getAllTenantFullGrid Controller Error:", err.message);
       res.status(500).json({ success: false, message: "Internal Server Error" });
     }
+  },
+
+  // Get Menu from stored procedure for dropdown/sidebar
+  getSystemMenu: async (req, res) => {
+    const userId = req.query.userId || 1;
+    try {
+      const rows = await tenantService.getSystemMenu(userId);
+      res.status(200).json(rows);
+    } catch (err) {
+      console.error("❌ getSystemMenu Controller Error:", err.message);
+      res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
   }
 };
 

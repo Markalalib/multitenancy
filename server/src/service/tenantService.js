@@ -43,6 +43,17 @@ const tenantService = {
       console.error("❌ getAllTenantFullGrid Service Error:", err.message);
       throw err;
     }
+  },
+
+  // Get system menu (via stored procedure)
+  getSystemMenu: async (userId) => {
+    try {
+      const rows = await tenantRepository.getSystemMenu(userId);
+      return rows;
+    } catch (err) {
+      console.error("❌ getSystemMenu Service Error:", err.message);
+      throw err;
+    }
   }
 };
 
