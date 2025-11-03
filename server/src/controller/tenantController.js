@@ -47,14 +47,14 @@ const tenantController = {
 
   // Get full tenant master grid (all columns, for full table)
   getAllTenantFullGrid: async (req, res) => {
-    try {
-      const grid = await tenantService.getAllTenantFullGrid();
-      res.status(200).json(grid);
-    } catch (err) {
-      console.error("❌ getAllTenantFullGrid Controller Error:", err.message);
-      res.status(500).json({ success: false, message: "Internal Server Error" });
-    }
-  },
+  try {
+    const grid = await tenantService.getAllTenantFullGrid();
+    res.status(200).json(grid.data || []);
+  } catch (err) {
+    console.error("❌ getAllTenantFullGrid Controller Error:", err.message);
+    res.status(500).json([]);
+  }
+},
 
   // Get Menu from stored procedure for dropdown/sidebar
   getSystemMenu: async (req, res) => {

@@ -3,7 +3,9 @@
         "Cdate",
         "Cuser",
         "dbresult",
+        "Multitenancy",
         "smid",
+        "Tenanttabs",
         "updation"
     ]
 }
