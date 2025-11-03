@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const tenantController = require("../controller/tenantController");
 
+// ✅ Create alias for frontend expectation
+router.get("/list", tenantController.getAllTenantFullGrid);
+
 // POST: Insert or Update Tenant
 router.post("/save", tenantController.insertOrUpdateTenant);
 

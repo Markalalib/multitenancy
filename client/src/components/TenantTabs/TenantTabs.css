@@ -1,0 +1,55 @@
+/* TenantTabs.css */
+
+/* Container alignment under navbar and beside sidebar */
+.tenant-tabs-container {
+  margin-top: 80px; /* space under navbar */
+  margin-left: 250px; /* align after sidebar */
+  width: calc(100% - 270px);
+  background: #fff;
+  padding: 10px 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Bootstrap Nav tabs styling */
+.tenant-tabs-nav .nav-link {
+  color: #4a4a4a;
+  font-weight: 500;
+  border: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+  padding: 10px 20px;
+  font-size: 15px;
+}
+
+/* Hover effect */
+.tenant-tabs-nav .nav-link:hover {
+  color: #6a11cb;
+  border-bottom: 2px solid #d8b4fe;
+  background-color: rgba(245, 240, 255, 0.6);
+}
+
+/* Active tab */
+.tenant-tabs-nav .nav-link.active,
+.tenant-tabs-nav .active-tab {
+  color: #fff !important;
+  background: linear-gradient(90deg, #6a11cb, #8e2de2);
+  border-radius: 8px 8px 0 0;
+  border: none;
+  box-shadow: 0 3px 10px rgba(106, 17, 203, 0.3);
+}
+
+/* Responsive fix */
+@media (max-width: 1024px) {
+  .tenant-tabs-container {
+    margin-left: 0;
+    width: 100%;
+    margin-top: 70px;
+    padding: 8px;
+  }
+
+  .tenant-tabs-nav {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
