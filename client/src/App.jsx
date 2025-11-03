@@ -1,12 +1,14 @@
 // src/App.js
 import React, { useState } from "react";
-import Sidebar from "./components/Sidebar";
-import TenantPage from "./pages/Tenants";
-import LovPage from "./pages/LovPage";
-import LovDetailsPage from "./pages/LovDetailsPage";
+import Sidebar from "./components/Sidebar/Sidebar";
+import Navbar from "./components/Navbar/Navbar";
+import TenantPage from "./pages/Tenants/Tenants";
+import LovPage from "./pages/LovPage/LovPage";
+import LovDetailsPage from "./pages/LovDetailsPage/LovDetailsPage";
+import "./index.css"; // global theme
 
 export default function App() {
-  const [page, setPage] = useState(""); // will hold Function_Action like "/tenant" or "/list-of-values"
+  const [page, setPage] = useState("");
 
   const renderPage = () => {
     switch (page) {
@@ -14,26 +16,24 @@ export default function App() {
         return <TenantPage />;
       case "/list-of-values":
         return <LovPage />;
-      // add more mappings below
       case "/list-of-value-detail":
         return <LovDetailsPage />;
+      
       default:
-        return (
-          <div className="p-4 text-center">
-            <h4>Select a menu item to start</h4>
-          </div>
-        );
+        
     }
   };
 
-  return (
-    <div className="d-flex">
-      {/* Sidebar */}
-      <Sidebar setPage={setPage} />
+  const handleLogout = () => {
+    alert("Logged out!");
+  };
 
-      {/* Page Content */}
-      <div className="flex-grow-1 p-4" style={{ background: "#f8f9fa" }}>
-        {renderPage()}
+  return (
+    <div className="app-container">
+      <Sidebar setPage={setPage} />
+      <div className="flex-grow-1">
+        <Navbar onLogout={handleLogout} />
+        <div className="page-content">{renderPage()}</div>
       </div>
     </div>
   );

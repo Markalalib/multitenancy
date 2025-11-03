@@ -7,7 +7,7 @@ const db = require("./src/config/dbConfig");
 // Enable CORS for your frontend dev server
 app.use(
   cors({
-    origin: ["http://localhost:5173"],  
+    origin: ["http://localhost:5173","http://localhost:5174"],  
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );

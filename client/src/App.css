@@ -40,3 +40,10 @@
 .read-the-docs {
   color: #888;
 }
+/* 🌈 Layout: Navbar Top + Sidebar Left + Content Right */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f9f9ff;
+}

@@ -1,5 +1,6 @@
 import React from "react";
-import LovDetailsForm from "../components/LovDetailsForm";
+import LovDetailsForm from "../../components/LovDetailsForm/LovDetailsForm";
+
 
 function LovPage() {
   return (

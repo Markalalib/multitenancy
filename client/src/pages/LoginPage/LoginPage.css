@@ -1,0 +1,60 @@
+/* src/pages/LoginPage/LoginPage.css */
+.login-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #6a11cb, #8e2de2);
+  font-family: "Poppins", sans-serif;
+}
+
+.login-box {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem 3rem;
+  border-radius: 1.5rem;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 350px;
+  color: white;
+}
+
+.login-box h2 {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 1rem;
+}
+
+.login-box input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.login-box button {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #8e2de2, #6a11cb);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-box button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+}
