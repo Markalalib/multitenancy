@@ -33,7 +33,7 @@
   overflow-y: auto;
   transition: var(--transition);
   font-family: var(--font);
-  position :fixed;
+  position :static;
 }
 
 /* ---------- Title ---------- */

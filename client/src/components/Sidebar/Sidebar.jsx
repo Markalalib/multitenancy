@@ -87,7 +87,10 @@ export default function Sidebar({ setPage }) {
                   sub.Functions.map((f) => (
                     <div
                       key={f.Function_ID}
-                      onClick={() => setPage(f.Function_Action)}
+                      onClick={() => { 
+                         console.log("Clicked:", f.Function_Action);
+                        setPage(f.Function_Action)}
+                      }
                       className="function-item"
                     >
                       {f.Function_Title}

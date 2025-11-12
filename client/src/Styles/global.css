@@ -1,0 +1,94 @@
+/* 🌈 GLOBAL THEME (applies everywhere) */
+:root {
+  --main-gradient: linear-gradient(135deg, #7b2ff7, #f107a3);
+  --light-bg: #f8f9ff;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --shadow: 0 4px 16px rgba(123, 47, 247, 0.15);
+  --border-radius: 12px;
+  --transition: 0.25s ease-in-out;
+  --text-dark: #2d2d2d;
+}
+
+/* 🌐 Page background */
+body {
+  background: var(--light-bg);
+  font-family: "Poppins", sans-serif;
+  color: var(--text-dark);
+}
+
+/* 🧱 Common container for all pages (RoleForm, TenantForm, etc.) */
+.page-container {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  margin: 2rem auto;
+}
+
+/* ✨ Form styling */
+form {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+.form-label {
+  font-weight: 600;
+  color: #4a148c;
+}
+
+.form-control,
+.form-select,
+textarea {
+  border-radius: var(--border-radius);
+  border: 1px solid #ccc;
+  transition: var(--transition);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #a56ff7;
+  box-shadow: 0 0 0 0.25rem rgba(165, 111, 247, 0.25);
+}
+
+/* 💾 Buttons */
+.btn-primary {
+  background: var(--main-gradient);
+  border: none;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background: #e0d4fa;
+  border: none;
+  color: #4a148c;
+}
+
+/* 📋 Table Styling */
+.table {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: white;
+}
+
+.table thead {
+  background: var(--main-gradient);
+  color: white;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
+/* 🧾 Page Titles */
+h4, h5 {
+  color: #5b13b9;
+  font-weight: 700;
+}

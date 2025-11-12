@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import "./TenantForm.css"; // custom styling
 
@@ -26,6 +26,46 @@ export default function TenantForm({ onSuccess, onClose, editingId }) {
     p_Status: 1,
     p_Notes: "",
   });
+  const [loading, setLoading] = useState(false);
+    useEffect(() => {
+    if (editingId) {
+      setLoading(true);
+      axios
+        .get(`http://localhost:5000/api/edit/TNT_M_TENANT/${editingId}`)
+        .then((res) => {
+          const record = res.data.data?.[0];
+          if (record) {
+            setFormData({
+              p_Tenant_ID: record.Tenant_ID,
+              p_Tenant_Name: record.Tenant_Name || "",
+              p_Tenant_Short_Name: record.Tenant_Short_Name || "",
+              p_Tenant_Address1: record.Tenant_Address1 || "",
+              p_Tenant_Phone1: record.Tenant_Phone1 || "",
+              p_Tenant_Phone2: record.Tenant_Phone2 || "",
+              p_Tenant_Phone3: record.Tenant_Phone3 || "",
+              p_Tenant_Fax: record.Tenant_Fax || "",
+              p_Tenant_Website: record.Tenant_Website || "",
+              p_Tenant_Logo: record.Tenant_Logo || null,
+              p_Tenant_Founded_Date: record.Tenant_Founded_Date
+                ? record.Tenant_Founded_Date.split("-").reverse().join("-")
+                : "",
+              p_Tenant_Contact_Email: record.Tenant_Contact_Email || "",
+              p_Tenant_City: record.Tenant_City || "",
+              p_Tenant_Country: record.Tenant_Country || "",
+              p_Tenant_State: record.Tenant_State || "",
+              p_Tenant_ZipCode: record.Tenant_ZipCode || "",
+              p_Max_Plant_Count: record.Max_Plant_Count || "",
+              p_Tenant_Is_Approved: record.Tenant_Is_Approved || 0,
+              p_Status: record.Status || 1,
+              p_Notes: record.Notes || "",
+              p_Cuser: 1,
+            });
+          }
+        })
+        .catch(() => alert("❌ Failed to load tenant details"))
+        .finally(() => setLoading(false));
+    }
+  }, [editingId]);
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
@@ -45,7 +85,7 @@ export default function TenantForm({ onSuccess, onClose, editingId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/tenant/save", formData);
+      const res = await axios.post("http://localhost:5000/api/tenants/save", formData);
       alert(res.data.message || "Tenant saved successfully!");
       onSuccess && onSuccess();
     } catch (error) {

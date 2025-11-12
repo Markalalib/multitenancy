@@ -4,12 +4,13 @@
   min-height: 100vh;
   background: #f9f8ff;
   transition: all 0.3s ease;
+  align-items: flex-start;
 }
 
 .lov-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  
   margin-bottom: 25px;
 }
 

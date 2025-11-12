@@ -1,55 +1,120 @@
-/* TenantTabs.css */
-
-/* Container alignment under navbar and beside sidebar */
+/* 🌈 Tenant Tabs Container */
 .tenant-tabs-container {
-  margin-top: 80px; /* space under navbar */
-  margin-left: 250px; /* align after sidebar */
-  width: calc(100% - 270px);
-  background: #fff;
-  padding: 10px 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #f7f5ff, #efe9ff);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.1);
+  margin-bottom: 24px;
+  border: 1px solid rgba(124, 58, 237, 0.08);
+  backdrop-filter: blur(10px);
+  position: relative;
 }
 
-/* Bootstrap Nav tabs styling */
-.tenant-tabs-nav .nav-link {
-  color: #4a4a4a;
+/* 🟪 Individual Tab Button */
+.tenant-tab-btn {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(124, 58, 237, 0.15);
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-size: 0.96rem;
   font-weight: 500;
-  border: none;
-  border-bottom: 2px solid transparent;
+  color: #4b4b4b;
+  letter-spacing: 0.3px;
   transition: all 0.3s ease;
-  padding: 10px 20px;
-  font-size: 15px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
-/* Hover effect */
-.tenant-tabs-nav .nav-link:hover {
-  color: #6a11cb;
-  border-bottom: 2px solid #d8b4fe;
-  background-color: rgba(245, 240, 255, 0.6);
+/* 🖱️ Hover Effect */
+.tenant-tab-btn:hover {
+  background: rgba(124, 58, 237, 0.1);
+  color: #6d28d9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);
 }
 
-/* Active tab */
-.tenant-tabs-nav .nav-link.active,
-.tenant-tabs-nav .active-tab {
-  color: #fff !important;
-  background: linear-gradient(90deg, #6a11cb, #8e2de2);
-  border-radius: 8px 8px 0 0;
+/* 🎯 Active Tab */
+.tenant-tab-btn.active {
+  background: linear-gradient(90deg, #6d28d9, #7e22ce, #9333ea);
+  color: #fff;
   border: none;
-  box-shadow: 0 3px 10px rgba(106, 17, 203, 0.3);
+  font-weight: 600;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.25);
+  position: relative;
 }
 
-/* Responsive fix */
-@media (max-width: 1024px) {
+/* ✨ Active underline animation */
+.tenant-tab-btn.active::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 25%;
+  width: 50%;
+  height: 3px;
+  border-radius: 4px;
+  background: #7e22ce;
+  animation: underline 0.4s ease forwards;
+}
+
+@keyframes underline {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 50%;
+    opacity: 1;
+  }
+}
+
+/* 📱 Responsive Adjustments */
+@media (max-width: 992px) {
   .tenant-tabs-container {
-    margin-left: 0;
-    width: 100%;
-    margin-top: 70px;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .tenant-tab-btn {
+    font-size: 0.9rem;
+    padding: 9px 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .tenant-tabs-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 12px;
+  }
+
+  .tenant-tab-btn {
+    flex: 1 1 calc(50% - 10px);
+    text-align: center;
+    font-size: 0.88rem;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tenant-tabs-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
     padding: 8px;
   }
 
-  .tenant-tabs-nav {
-    justify-content: center;
-    flex-wrap: wrap;
+  .tenant-tab-btn {
+    width: 100%;
+    font-size: 0.85rem;
+    padding: 9px 0;
   }
 }

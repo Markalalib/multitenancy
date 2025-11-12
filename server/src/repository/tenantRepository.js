@@ -4,8 +4,6 @@ const tenantRepository = {
   // 1. Insert or update tenant (via stored procedure)
   insertUpdateTenant: async (tenantData) => {
   try {
-    // 👇 Add this line here
-    console.log("🚀 Tenant Data Received:", tenantData);
 
     const {
       p_Tenant_ID,
@@ -60,14 +58,35 @@ const tenantRepository = {
       ]
     );
 
-    const [out] = await db.query(`SELECT @p_Result AS result;`);
-    const result = out[0]?.result || "No response";
-    return { success: true, message: result };
-  } catch (error) {
-    console.error("❌ insertOrUpdateTenant Error:", error.message);
-    return { success: false, message: error.message };
-  }
-},
+    const [resultRows] = await db.query(`SELECT @p_Result AS result;`);
+
+    const message = resultRows[0].result || "Unknown response";
+    
+      const isError =
+        message.toLowerCase().includes("error") ||
+        message.toLowerCase().includes("exists") ||
+        message.toLowerCase().includes("duplicate") ||
+        message.toLowerCase().includes("failed") ||
+        message.toLowerCase().includes("invalid") ||
+        message.toLowerCase().includes("not found");
+
+      return {
+        success: !isError,
+        message,
+      };
+    } catch (err) {
+      console.error(
+        "❌ Repository Error (insertOrUpdateTenant):",
+        err.message || err.sqlMessage
+      );
+      return {
+        success: false,
+        message: "Error inserting/updating tenant in repo.",
+        error: err.message || err.sqlMessage,
+      };
+    }
+  },
+
 
 
   // 2. Get all tenant names for dropdown

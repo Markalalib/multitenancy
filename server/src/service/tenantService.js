@@ -2,7 +2,7 @@
 // tenantService.js
 // ==========================================
 const tenantRepository = require("../repository/tenantRepository");
-
+const db = require("../config/dbConfig");
 const tenantService = {
   // ======================================================
   // Insert or Update Tenant
@@ -10,19 +10,7 @@ const tenantService = {
   insertOrUpdateTenant: async (tenantData) => {
     try {
       const result = await tenantRepository.insertUpdateTenant(tenantData);
-
-      if (result && result.success) {
-        return {
-          success: true,
-          message: "Tenant saved successfully.",
-          data: result.data || null,
-        };
-      }
-
-      return {
-        success: false,
-        message: result?.message || "Failed to save tenant data.",
-      };
+      return result;
     } catch (err) {
       console.error("❌ insertOrUpdateTenant Service Error:", err);
       return { success: false, message: "Error saving tenant data." };
@@ -56,17 +44,39 @@ const tenantService = {
   },
 
   // ======================================================
-  // Get All Tenant Data for Master Grid
-  // ======================================================
-  getAllTenantFullGrid: async () => {
+ // ======================================================
+// Get All Tenant Data for Master Grid
+// ======================================================
+getAllTenantFullGrid: async () => {
   try {
-    const rows = await tenantRepository.getAllTenantFullGrid();
+    const [rows] = await db.query(`
+      SELECT 
+        ROW_NUMBER() OVER (ORDER BY T.Cdate DESC) AS Serial_No,
+        T.Tenant_ID,
+        T.Tenant_Code,
+        T.Tenant_Name,
+        T.Tenant_Short_Name,
+        T.Tenant_Address1 AS Tenant_Address,
+        T.Tenant_City,
+        T.Tenant_Country,
+        T.Tenant_Phone1 AS Tenant_Phone,
+        T.Tenant_Contact_Email AS Tenant_Email,
+        T.Tenant_Website,
+        DATE_FORMAT(T.Cdate, '%d-%b-%Y') AS Created_Date,
+        LD.LOV_Details_Name AS Status
+      FROM tnt_m_tenant T
+      LEFT JOIN com_l_lov_details LD ON LD.LOV_Details_ID = T.Status
+      ORDER BY T.Cdate DESC;
+    `);
+
+    console.log("✅ Tenant Grid Data:", rows.length);
     return { success: true, data: rows };
-  } catch (err) {
-    console.error("❌ getAllTenantFullGrid Service Error:", err);
-    return { success: false, message: "Error fetching tenant grid data." };
+  } catch (error) {
+    console.error("❌ getAllTenantFullGrid Error:", error.message);
+    return { success: false, message: error.message };
   }
 },
+
 
   // ======================================================
   // Get a Single Tenant by ID
