@@ -27,10 +27,13 @@ try {
   const tenantRoutes = require("./src/routes/tenantRoutes");
   const menuRoutes = require("./src/routes/menuRoutes");
   const lovRoutes = require("./src/routes/lovRoutes");
+  const roleRoutes = require('./src/routes/roleRoutes');
+
 
   app.use("/api/tenants", tenantRoutes);
   app.use("/api/menus", menuRoutes);
   app.use("/api/lov", lovRoutes);
+  app.use('/api/roles', roleRoutes);
 
   console.log("✅ Tenant routes loaded successfully!");
 } catch (err) {

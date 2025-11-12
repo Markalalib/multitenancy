@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+
 export default function Sidebar({ setPage }) {
   const [menuData, setMenuData] = useState([]);
   const [openModules, setOpenModules] = useState({});
@@ -94,18 +95,17 @@ export default function Sidebar({ setPage }) {
                 {openSubModules[subId] &&
                   sub.Functions.map((f) => (
                     <div
-                      key={f.Function_ID}
-                      onClick={() => setPage(f.Function_Action)}
-                      className="ms-4 text-dark small py-1"
-                      style={{ cursor: "pointer" }}
-                      onMouseEnter={(e) =>
-                        (e.currentTarget.style.color = "#0d6efd")
-                      }
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.style.color = "#000")
-                      }
-                    >
-                      • {f.Function_Title}
+                       key={f.Function_ID}
+  onClick={() => {
+    if (f.Function_Title === "Role") setPage("Roles");
+    else setPage(f.Function_Action);
+  }}
+  className="ms-4 text-dark small py-1"
+  style={{ cursor: "pointer" }}
+  onMouseEnter={(e) => (e.currentTarget.style.color = "#0d6efd")}
+  onMouseLeave={(e) => (e.currentTarget.style.color = "#000")}
+>
+  • {f.Function_Title}
                     </div>
                   ))}
               </div>
