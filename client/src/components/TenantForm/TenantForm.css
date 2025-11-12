@@ -1,0 +1,196 @@
+/* 🌈 Elegant Tenant Form (Professional Glass Theme, Horizontal Layout) */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+.tenant-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, #ede9fe, #f5f3ff);
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+/* 🪟 Form Card */
+.tenant-form-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border-radius: 22px;
+  box-shadow: 0 10px 28px rgba(120, 60, 250, 0.12);
+  width: 95%;
+  max-width: 1250px; /* 👈 Wider Form */
+  padding: 2.5rem 3rem;
+  transition: all 0.3s ease;
+}
+
+.tenant-form-card:hover {
+  box-shadow: 0 12px 36px rgba(120, 60, 250, 0.18);
+}
+
+/* 🏷️ Header */
+.tenant-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid #a78bfa;
+  padding-bottom: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.tenant-form-header h4 {
+  font-weight: 600;
+  color: #4b0082;
+  font-size: 1.6rem;
+  letter-spacing: 0.3px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: #6b21a8;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.close-btn:hover {
+  color: #9333ea;
+}
+
+/* 🧩 Grid Layout */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); /* 👈 Bigger field width */
+  gap: 1.5rem 2rem;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: #5b21b6;
+  margin-bottom: 0.4rem;
+  display: block;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1.6px solid #d0bdf4;
+  border-radius: 12px;
+  outline: none;
+  font-size: 1rem;
+  background: #fff;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.3);
+}
+
+/* Full-width elements */
+.form-group.full-width {
+  grid-column: span 2;
+}
+
+/* Checkbox Styling */
+.checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: #4b0082;
+  margin-top: 0.8rem;
+}
+
+/* 🧭 Action Buttons */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.btn-save,
+.btn-clear,
+.btn-cancel {
+  border: none;
+  padding: 0.75rem 1.6rem;
+  border-radius: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 0.96rem;
+  transition: all 0.3s;
+}
+
+.btn-save {
+  background: linear-gradient(90deg, #8b5cf6, #6366f1);
+  color: white;
+}
+.btn-save:hover {
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-clear {
+  background: #f4f3ff;
+  color: #6d28d9;
+  border: 1px solid #c4b5fd;
+}
+.btn-clear:hover {
+  background: #e9d5ff;
+  transform: translateY(-1px);
+}
+
+.btn-cancel {
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #555;
+}
+.btn-cancel:hover {
+  background: #f9fafb;
+  transform: translateY(-1px);
+}
+
+/* 📱 Responsive Adjustments */
+@media (max-width: 992px) {
+  .tenant-form-card {
+    width: 95%;
+    padding: 2rem;
+  }
+  .form-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .tenant-form-container {
+    padding: 1.5rem;
+  }
+  .tenant-form-card {
+    width: 100%;
+    padding: 1.8rem;
+  }
+  .form-group.full-width {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .tenant-form-card {
+    padding: 1.2rem;
+  }
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .btn-save,
+  .btn-clear,
+  .btn-cancel {
+    width: 100%;
+    text-align: center;
+  }
+}

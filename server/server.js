@@ -17,7 +17,7 @@ app.use(express.json());
 // Enable CORS for frontend
 app.use(
   cors({
-    origin: ["http://localhost:5173"], // Frontend origin
+    origin: ["http://localhost:5173","http://localhost:5174"],  
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
@@ -27,13 +27,17 @@ try {
   const tenantRoutes = require("./src/routes/tenantRoutes");
   const menuRoutes = require("./src/routes/menuRoutes");
   const lovRoutes = require("./src/routes/lovRoutes");
-  const roleRoutes = require('./src/routes/roleRoutes');
-
+  const loginRoutes= require("./src/routes/loginRoutes");
+  const editBindMasterRoutes =require("./src/routes/editRoutes");
+  const roleRoutes = require('./src/routes/roleRoutes')
 
   app.use("/api/tenants", tenantRoutes);
   app.use("/api/menus", menuRoutes);
   app.use("/api/lov", lovRoutes);
+  app.use("/api/login",loginRoutes);
+  app.use("/api",editBindMasterRoutes);
   app.use('/api/roles', roleRoutes);
+
 
   console.log("✅ Tenant routes loaded successfully!");
 } catch (err) {

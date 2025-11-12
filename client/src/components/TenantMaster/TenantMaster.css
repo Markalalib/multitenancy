@@ -1,0 +1,160 @@
+/* 🌈 Tenant Master - Elegant Dashboard Theme */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+.tenant-page-container {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #f5f3ff, #faf9ff);
+  min-height: 100vh;
+  padding: 2.5rem;
+  border-radius: 20px;
+}
+
+/* Header */
+.tenant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.8rem;
+}
+
+.tenant-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #4b0082;
+  letter-spacing: 0.3px;
+}
+
+.btn-gradient {
+  background: linear-gradient(90deg, #8b5cf6, #6366f1);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 0.6rem 1.3rem;
+  font-weight: 500;
+  box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+  background: linear-gradient(90deg, #7c3aed, #4f46e5);
+  box-shadow: 0 6px 14px rgba(99, 102, 241, 0.35);
+  transform: translateY(-1px);
+}
+
+/* 🌐 Table Section */
+.table-responsive {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(120, 80, 200, 0.08);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+}
+
+.tenant-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 0.93rem;
+  color: #333;
+}
+
+.tenant-table thead tr {
+  background: linear-gradient(90deg, #7e22ce, #6d28d9);
+  color: white;
+  font-size: 0.95rem;
+}
+
+.tenant-table th,
+.tenant-table td {
+  padding: 0.9rem 1rem;
+  border: 1px solid #ece7ff;
+  vertical-align: middle;
+}
+
+.tenant-table tbody tr:nth-child(even) {
+  background-color: #faf8ff;
+}
+
+.tenant-table tbody tr:hover {
+  background-color: #f3e8ff;
+  transition: background 0.3s;
+}
+
+/* Status Styling */
+.tenant-table td:nth-child(11) {
+  font-weight: 500;
+  color: #5b21b6;
+}
+
+/* Buttons inside table */
+.btn-outline-primary,
+.btn-outline-danger {
+  font-size: 0.82rem;
+  border-radius: 8px;
+  padding: 0.35rem 0.75rem;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+/* Edit Button */
+.btn-outline-primary {
+  color: #6d28d9;
+  border: 1.5px solid #a78bfa;
+  background: #f5f3ff;
+}
+.btn-outline-primary:hover {
+  background: linear-gradient(90deg, #8b5cf6, #6366f1);
+  color: white;
+  box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);
+}
+
+/* Delete Button */
+.btn-outline-danger {
+  color: #b91c1c;
+  border: 1.5px solid #fecaca;
+  background: #fff5f5;
+}
+.btn-outline-danger:hover {
+  background: #ef4444;
+  color: white;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.25);
+}
+
+/* Empty State */
+.text-muted {
+  font-size: 1rem;
+  color: #7c3aed !important;
+}
+
+/* Responsive tweaks */
+@media (max-width: 992px) {
+  .tenant-page-container {
+    padding: 1.5rem;
+  }
+  .tenant-title {
+    font-size: 1.4rem;
+  }
+  .btn-gradient {
+    padding: 0.5rem 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .tenant-table th,
+  .tenant-table td {
+    font-size: 0.85rem;
+    padding: 0.6rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .tenant-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .btn-gradient {
+    width: 100%;
+    text-align: center;
+  }
+}

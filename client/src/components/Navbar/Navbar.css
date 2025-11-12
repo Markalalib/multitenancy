@@ -1,0 +1,90 @@
+/* -------------------------------------------------
+   💜 Elegant Top Navbar — Light Purple Gradient Theme
+   Font: Montserrat | Author: ChatGPT UI Design Studio — 2025
+--------------------------------------------------- */
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap");
+
+:root {
+  --gradient-start: #6a11cb;
+  --gradient-end: #8e2de2;
+  --bg-light: #ffffff;
+  --text-primary: #2c2c2c;
+  --text-secondary: #555;
+  --button-gradient-start: #8e2de2;
+  --button-gradient-end: #6a11cb;
+  --button-hover-start: #9b6aff;
+  --button-hover-end: #7b2ff7;
+  --border-color: #eae6f8;
+  --font-family: "Montserrat", sans-serif;
+}
+
+/* ---------- Navbar Container ---------- */
+.navbar-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--bg-light);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 1050;
+  font-family: var(--font-family);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* ---------- Navbar Title ---------- */
+.navbar-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---------- User Text ---------- */
+.user-name {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* ---------- Logout Button ---------- */
+.logout-btn {
+  background: linear-gradient(90deg, var(--button-gradient-start), var(--button-gradient-end));
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 6px rgba(142, 45, 226, 0.25);
+}
+
+.logout-btn:hover {
+  background: linear-gradient(90deg, var(--button-hover-start), var(--button-hover-end));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(123, 47, 247, 0.25);
+}
+
+.logout-btn:active {
+  transform: scale(0.98);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .navbar-title {
+    font-size: 1rem;
+  }
+
+  .logout-btn {
+    padding: 5px 12px;
+    font-size: 0.8rem;
+  }
+
+  .user-name {
+    font-size: 0.85rem;
+  }
+}

@@ -1,0 +1,44 @@
+/* 🌈 RoleTabs.css | Purple Gradient Professional Theme */
+
+.gradient-tabs .nav-link {
+  color: #6a11cb;
+  font-weight: 500;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.gradient-tabs .nav-link.active {
+  background: linear-gradient(135deg, #6a11cb, #a4508b);
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(106, 17, 203, 0.2);
+}
+
+.gradient-tabs .nav-link:hover {
+  background: rgba(106, 17, 203, 0.08);
+  color: #6a11cb;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border: none;
+  box-shadow: 0 4px 20px rgba(106, 17, 203, 0.15);
+  border-radius: 16px;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #6a11cb 0%, #a4508b 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn-gradient {
+  background: linear-gradient(135deg, #6a11cb, #a4508b);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  transition: 0.3s ease;
+}

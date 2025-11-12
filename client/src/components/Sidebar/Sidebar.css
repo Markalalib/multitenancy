@@ -1,0 +1,148 @@
+/* -------------------------------------------------
+   🌤 Elegant Light Glassy Sidebar
+   Theme: Purple Accent Gradient
+   Font: Montserrat
+   Author: ChatGPT UI Design — 2025
+--------------------------------------------------- */
+
+/* ---------- Font ---------- */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap");
+
+:root {
+  --sidebar-width: 260px;
+  --purple-gradient: linear-gradient(90deg, #6a11cb, #8e2de2);
+  --bg-light: #ffffff;
+  --text-dark: #2e2e3a;
+  --text-muted: #6f6f7a;
+  --border-light: rgba(0, 0, 0, 0.08);
+  --hover-bg: rgba(106, 17, 203, 0.07);
+  --active-bg: rgba(106, 17, 203, 0.15);
+  --transition: 0.25s ease;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  --font: "Montserrat", sans-serif;
+}
+
+/* ---------- Base Container ---------- */
+.sidebar-container {
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--bg-light);
+  box-shadow: var(--shadow);
+  border-right: 1px solid var(--border-light);
+  padding: 1.2rem 1rem;
+  overflow-y: auto;
+  transition: var(--transition);
+  font-family: var(--font);
+  position :static;
+}
+
+/* ---------- Title ---------- */
+.sidebar-title {
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+  background: var(--purple-gradient);
+  border-radius: 10px;
+  padding: 12px 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 3px 8px rgba(106, 17, 203, 0.25);
+}
+
+/* ---------- Module ---------- */
+.module-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  background: #f9f9ff;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+}
+
+.module-title:hover {
+  background: var(--hover-bg);
+  color: #6a11cb;
+}
+
+.module-title.open {
+  background: var(--active-bg);
+  color: #6a11cb;
+}
+
+/* ---------- Submodule ---------- */
+.sidebar-submodule {
+  margin-left: 12px;
+  border-left: 2px solid rgba(106, 17, 203, 0.15);
+  padding-left: 10px;
+  margin-top: 0.3rem;
+}
+
+.submodule-title {
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+}
+
+.submodule-title:hover {
+  background: var(--hover-bg);
+  color: #6a11cb;
+}
+
+.submodule-title.open {
+  color: #6a11cb;
+  font-weight: 600;
+}
+
+/* ---------- Function ---------- */
+.function-item {
+  padding: 6px 14px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: var(--transition);
+  margin-left: 18px;
+}
+
+.function-item:hover {
+  background: var(--hover-bg);
+  color: #6a11cb;
+  transform: translateX(4px);
+}
+
+/* ---------- Arrow ---------- */
+.arrow {
+  font-size: 0.8rem;
+  margin-right: 8px;
+  color: #6a11cb;
+  opacity: 0.8;
+  transition: transform var(--transition);
+}
+
+.open .arrow {
+  transform: rotate(90deg);
+}
+
+/* ---------- Scrollbar ---------- */
+.sidebar-container::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar-container::-webkit-scrollbar-thumb {
+  background: rgba(106, 17, 203, 0.3);
+  border-radius: 10px;
+}
+.sidebar-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(106, 17, 203, 0.5);
+}

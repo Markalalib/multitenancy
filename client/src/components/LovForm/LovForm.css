@@ -1,0 +1,52 @@
+.lov-page {
+  padding: 30px;
+  margin-left: 250px; /* same as sidebar width */
+  min-height: 100vh;
+  background: #f9f8ff;
+  transition: all 0.3s ease;
+  align-items: flex-start;
+}
+
+.lov-header {
+  display: flex;
+  justify-content: space-between;
+  
+  margin-bottom: 25px;
+}
+
+.lov-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #6a11cb;
+  letter-spacing: 0.5px;
+}
+
+.container {
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+.card {
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(106, 17, 203, 0.1);
+}
+
+.card-header {
+  background: linear-gradient(90deg, #a371d8, #8e2de2);
+  color: white;
+  text-align: center;
+  font-weight: 600;
+  padding: 1rem;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #6a11cb, #8e2de2);
+  border: none;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}

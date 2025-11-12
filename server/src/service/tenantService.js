@@ -10,19 +10,7 @@ const tenantService = {
   insertOrUpdateTenant: async (tenantData) => {
     try {
       const result = await tenantRepository.insertUpdateTenant(tenantData);
-
-      if (result && result.success) {
-        return {
-          success: true,
-          message: "Tenant saved successfully.",
-          data: result.data || null,
-        };
-      }
-
-      return {
-        success: false,
-        message: result?.message || "Failed to save tenant data.",
-      };
+      return result;
     } catch (err) {
       console.error("❌ insertOrUpdateTenant Service Error:", err);
       return { success: false, message: "Error saving tenant data." };

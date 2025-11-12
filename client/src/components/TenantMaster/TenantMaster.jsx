@@ -1,49 +1,64 @@
-// pages/TenantMaster.jsx
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import TenantTabs from "../components/Tenanttabs";
+import "./TenantMaster.css";
 
-export default function TenantMaster() {
-  const navigate = useNavigate();
+export default function TenantMaster({ handleEdit }) {
   const [tenants, setTenants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    const fetchTenants = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get("http://localhost:5000/api/tenants/list");
-        if (res.data?.success && Array.isArray(res.data.data)) {
-          setTenants(res.data.data);
-        } else {
-          setTenants([]);
-          setError("No tenants found.");
-        }
-      } catch (err) {
-        console.error("❌ Failed to load tenants:", err);
-        setError("Failed to load tenants.");
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchTenants();
+  const loadTenants = () => {
+    setLoading(true);
+    setError("");
+    axios
+      .get("http://localhost:5000/api/tenants/list")
+      .then((res) => {
+        const data = res.data.data;
+        setTenants(Array.isArray(data) ? data : []);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Failed to load tenants.");
+        setTenants([]);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    loadTenants();
   }, []);
 
+  const handleDelete = async (tenantId) => {
+    if (!window.confirm("Are you sure you want to delete this tenant?")) return;
+    try {
+      await axios.delete(`http://localhost:5000/api/tenants/${tenantId}`);
+      loadTenants();
+    } catch {
+      alert("Failed to delete tenant.");
+    }
+  };
+
   return (
-    <div className="container mt-4 bg-white rounded-xl p-6 shadow">
-      <TenantTabs activeTab="tenantMaster" />
+    <div className="tenant-page-container">
+      <div className="tenant-header d-flex justify-content-between align-items-center mb-3">
+        <h4 className="tenant-title">🏢  TenantMaster</h4>
+        <button
+          className="btn btn-gradient"
+          onClick={() => handleEdit(null)}
+        >
+          
+        </button>
+      </div>
 
       {loading ? (
-        <div className="text-center py-4">Loading tenants...</div>
+        <div className="py-4 text-center text-secondary">Loading tenants...</div>
       ) : error ? (
         <div className="alert alert-danger text-center">{error}</div>
       ) : tenants.length > 0 ? (
         <div className="table-responsive">
-          <table className="table table-bordered align-middle">
-            <thead className="table-light">
+          <table className="table table-bordered align-middle tenant-table">
+            <thead>
               <tr>
                 <th>#</th>
                 <th>Code</th>
@@ -59,7 +74,6 @@ export default function TenantMaster() {
                 <th>Action</th>
               </tr>
             </thead>
-
             <tbody>
               {tenants.map((t) => (
                 <tr key={t.Tenant_ID}>
@@ -76,10 +90,16 @@ export default function TenantMaster() {
                   <td>{t.Status || "-"}</td>
                   <td>
                     <button
-                      className="btn btn-sm btn-warning me-2"
-                      onClick={() => navigate(`/tenant-form/${t.Tenant_ID}`)}
+                      className="btn btn-sm btn-outline-primary me-2"
+                      onClick={() => handleEdit(t.Tenant_ID)}
                     >
                       Edit
+                    </button>
+                    <button
+                      className="btn btn-sm btn-outline-danger"
+                      onClick={() => handleDelete(t.Tenant_ID)}
+                    >
+                      Delete
                     </button>
                   </td>
                 </tr>
@@ -88,8 +108,9 @@ export default function TenantMaster() {
           </table>
         </div>
       ) : (
-        <div className="text-center text-muted py-4">No Tenants found.</div>
+        <div className="text-center text-muted py-4">No tenants found.</div>
       )}
     </div>
+    
   );
 }

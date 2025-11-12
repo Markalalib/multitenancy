@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./LovDetailsForm.css";
 
 export default function LovDetailsGridForm() {
   const [lovList, setLovList] = useState([]); // Dropdown data
@@ -94,8 +95,15 @@ export default function LovDetailsGridForm() {
     }
   };
 
-  return (
-    <div className="container mt-4">
+ 
+   return (
+  <div className="lov-page">
+    <div className="lov-container">
+      {/* Header */}
+      <div className="lov-header">
+        <h4 className="lov-title">List of Value Details</h4>
+      </div>
+
       {/* Dropdown */}
       <div className="mb-3">
         <label className="form-label fw-semibold">
@@ -107,6 +115,7 @@ export default function LovDetailsGridForm() {
           onChange={(e) => setSelectedLovId(e.target.value)}
           required
         >
+          <option value="">-- Select List --</option>
           {lovList.map((lov) => (
             <option key={lov.Id} value={lov.Id}>
               {lov.Name}
@@ -115,7 +124,7 @@ export default function LovDetailsGridForm() {
         </select>
       </div>
 
-      {/* Grid Table */}
+      {/* Card with Table */}
       <div className="card shadow-sm">
         <div className="card-body">
           <div className="d-flex justify-content-between mb-3">
@@ -127,12 +136,10 @@ export default function LovDetailsGridForm() {
             </button>
           </div>
 
-          <table className="table table-bordered table-striped">
+          <table className="table table-bordered table-striped align-middle">
             <thead className="table-primary text-center">
               <tr>
-                <th>
-                  LOV Details Name <span className="text-danger">*</span>
-                </th>
+                <th>LOV Details Name *</th>
                 <th>LOV Details Description</th>
                 <th>Action</th>
               </tr>
@@ -194,5 +201,6 @@ export default function LovDetailsGridForm() {
         </div>
       </div>
     </div>
-  );
-}
+  </div>
+   );
+  }

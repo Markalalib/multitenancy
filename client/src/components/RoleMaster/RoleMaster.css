@@ -1,0 +1,118 @@
+/* 🌈 RoleMaster.css | Elegant Purple Gradient Table */
+
+.role-master-container {
+  background: linear-gradient(145deg, #ffffff, #f6f0ff);
+  border-radius: 18px;
+  padding: 2rem;
+  box-shadow: 0 6px 18px rgba(106, 17, 203, 0.15);
+  backdrop-filter: blur(10px);
+  transition: 0.3s ease-in-out;
+  font-family: "Inter", "Poppins", sans-serif;
+}
+
+.role-master-container:hover {
+  box-shadow: 0 8px 24px rgba(106, 17, 203, 0.25);
+}
+
+.role-master-container h4 {
+  font-weight: 600;
+  color: #6a11cb;
+  text-shadow: 0 1px 2px rgba(106, 17, 203, 0.15);
+}
+
+/* 📊 Table Styling */
+.role-master-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(106, 17, 203, 0.08);
+}
+
+.role-master-table thead {
+  background: linear-gradient(135deg, #6a11cb, #a4508b);
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.role-master-table thead th {
+  padding: 0.9rem;
+  text-align: center;
+  font-size: 0.9rem;
+  letter-spacing: 0.4px;
+}
+
+.role-master-table tbody td {
+  padding: 0.8rem;
+  text-align: center;
+  vertical-align: middle;
+  color: #3a0066;
+  background: #fdfdff;
+  border-bottom: 1px solid rgba(106, 17, 203, 0.08);
+  font-size: 0.92rem;
+}
+
+.role-master-table tbody tr:hover {
+  background: rgba(106, 17, 203, 0.05);
+  transition: background 0.2s ease-in-out;
+}
+
+/* 🟢 Active / 🔴 Inactive Badges */
+.role-status-active {
+  background: rgba(106, 17, 203, 0.1);
+  color: #6a11cb;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.role-status-inactive {
+  background: rgba(200, 0, 0, 0.08);
+  color: #b30000;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+/* ✨ Buttons */
+.role-master-table .btn-warning {
+  background: linear-gradient(135deg, #ffb347, #ffcc33);
+  border: none;
+  color: #4a007e;
+  font-weight: 500;
+  border-radius: 6px;
+  padding: 0.3rem 0.7rem;
+  transition: 0.3s ease;
+}
+
+.role-master-table .btn-warning:hover {
+  background: linear-gradient(135deg, #ffcc33, #ffb347);
+  box-shadow: 0 3px 10px rgba(255, 180, 70, 0.4);
+}
+
+.role-master-table .btn-danger {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  border: none;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 6px;
+  padding: 0.3rem 0.7rem;
+  transition: 0.3s ease;
+}
+
+.role-master-table .btn-danger:hover {
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  box-shadow: 0 3px 10px rgba(255, 65, 108, 0.4);
+}
+
+/* 🕓 Loading & Empty State */
+.role-master-container p {
+  color: #6a11cb;
+  font-weight: 500;
+  text-align: center;
+  padding: 1rem 0;
+}
