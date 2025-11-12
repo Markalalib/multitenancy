@@ -3,6 +3,11 @@
 // ==============================
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ReactCountryFlag from "react-country-flag";
+import 'react-phone-input-2/lib/bootstrap.css';
+import PhoneInput from 'react-phone-input-2';
+
+
 
 export default function TenantForm({ editingId = null, onSuccess, onClose }) {
   const [formData, setFormData] = useState({
@@ -242,15 +247,27 @@ console.log(formData);
 
               {/* Country */}
               <div className="col-md-6">
-                <label className="form-label fw-semibold">Country *</label>
-                <input
-                  type="text"
-                  name="p_Tenant_Country"
-                  value={formData.p_Tenant_Country}
-                  onChange={handleChange}
-                  className="form-control"
-                  required
-                />
+                <label className="form-label fw-semibold">Country</label>
+                <div className="d-flex align-items-center gap-2">
+                  <ReactCountryFlag
+                    countryCode={formData.p_Tenant_Country}
+                    svg
+                    style={{
+                      width: "2em",
+                      height: "2em",
+                    }}
+                    title={formData.p_Tenant_Country}
+                  />
+                  <input
+                    type="text"
+                    name="p_Tenant_Country"
+                    value={formData.p_Tenant_Country}
+                    onChange={handleChange}
+                    className="form-control"
+                    placeholder="Enter country"
+                    required
+                  />
+                </div>
               </div>
 
               {/* City */}
@@ -288,44 +305,55 @@ console.log(formData);
                   className="form-control"
                 />
               </div>
+              {/* Primary Phone */}
+<div className="col-md-4">
+  <label className="form-label fw-semibold">Primary Phone *</label>
+  <PhoneInput
+    country={'in'} // default India
+    value={formData.p_Tenant_Phone1}
+    onChange={(value) =>
+      setFormData({ ...formData, p_Tenant_Phone1: value })
+    }
+    inputClass="form-control"
+    containerStyle={{ width: '100%' }}
+    inputStyle={{ width: '100%' }}
+    enableSearch={true}
+  />
+</div>
 
-              {/* Phone 1 */}
-              <div className="col-md-4">
-                <label className="form-label fw-semibold">Primary Phone *</label>
-                <input
-                  type="text"
-                  name="p_Tenant_Phone1"
-                  value={formData.p_Tenant_Phone1}
-                  onChange={handleChange}
-                  className="form-control"
-                  required
-                />
-              </div>
+{/* Alternate Phone */}
+<div className="col-md-4">
+  <label className="form-label fw-semibold">Alternate Phone</label>
+  <PhoneInput
+    country={'in'}
+    value={formData.p_Tenant_Phone2}
+    onChange={(value) =>
+      setFormData({ ...formData, p_Tenant_Phone2: value })
+    }
+    inputClass="form-control"
+    containerStyle={{ width: '100%' }}
+    inputStyle={{ width: '100%' }}
+    enableSearch={true}
+  />
+</div>
 
-              {/* Phone 2 */}
-              <div className="col-md-4">
-                <label className="form-label fw-semibold">Alternate Phone</label>
-                <input
-                  type="text"
-                  name="p_Tenant_Phone2"
-                  value={formData.p_Tenant_Phone2}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-              </div>
+{/* Other Phone */}
+<div className="col-md-4">
+  <label className="form-label fw-semibold">Other Phone</label>
+  <PhoneInput
+    country={'in'}
+    value={formData.p_Tenant_Phone3}
+    onChange={(value) =>
+      setFormData({ ...formData, p_Tenant_Phone3: value })
+    }
+    inputClass="form-control"
+    containerStyle={{ width: '100%' }}
+    inputStyle={{ width: '100%' }}
+    enableSearch={true}
+  />
+</div>
 
-              {/* Phone 3 */}
-              <div className="col-md-4">
-                <label className="form-label fw-semibold">Other Phone</label>
-                <input
-                  type="text"
-                  name="p_Tenant_Phone3"
-                  value={formData.p_Tenant_Phone3}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-              </div>
-
+              
               {/* Fax */}
               <div className="col-md-6">
                 <label className="form-label fw-semibold">Fax</label>

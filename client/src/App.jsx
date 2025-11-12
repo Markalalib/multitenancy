@@ -4,6 +4,7 @@ import Sidebar from "./components/Sidebar";
 import Tenants from "./pages/Tenants";
 import LovPage from "./pages/LovPage";
 import LovDetailsPage from "./pages/LovDetailsPage";
+import Roles from "./pages/Roles";
 
 export default function App() {
   const [page, setPage] = useState(""); // will hold current page route like "/tenant"
@@ -36,6 +37,7 @@ export default function App() {
         style={{ background: "#f8f9fa", overflowY: "auto" }}
       >
         {renderPage()}
+        {page === "Roles" && <Roles />}
       </div>
     </div>
   );
