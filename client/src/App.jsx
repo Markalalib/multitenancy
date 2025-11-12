@@ -1,51 +1,62 @@
 // src/App.js
 import React, { useState } from "react";
-import Sidebar from "./components/Sidebar";
-import TenantPage from "./pages/Tenants";
-import LovPage from "./pages/LovPage";
-import LovDetailsPage from "./pages/LovDetailsPage";
-import LoginPage from "./pages/Loginpage"; // ✅ import your login page
+import Sidebar from "./components/Sidebar/Sidebar";
+import Navbar from "./components/Navbar/Navbar";
+import Tenants from "./pages/Tenants/Tenants";
+import LovPage from "./pages/LovPage/LovPage";
+import LovDetailsPage from "./pages/LovDetailsPage/LovDetailsPage";
+import LoginPage from "./pages/LoginPage/LoginPage"; // ✅ import your login page
+import Roles from "./pages/Roles/Roles";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 export default function App() {
-  const [page, setPage] = useState(""); // holds which page is open
+  const [page, setPage] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false); // ✅ track login state
 
+  // ✅ Handle logout
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    alert("🔒 Logged out!");
+  };
+
+  // ✅ Handle login success
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  // ✅ Page routing logic
   const renderPage = () => {
     switch (page) {
       case "/tenant":
-        return <TenantPage />;
+        return <Tenants />;
       case "/list-of-values":
         return <LovPage />;
       case "/list-of-value-detail":
-        return <LovDetailsPage />;
+        return <LovDetailsPage />
+      case "/role":
+        return <Roles />;
       default:
-        return (
-          <div className="p-4 text-center">
-            <h4>Select a menu item to start</h4>
-          </div>
-        );
+        return <div className="text-center mt-5">Please select a page.</div>;
     }
   };
 
-  // ✅ If user not logged in, show login page first
+  // ✅ If not logged in → show LoginPage
   if (!isLoggedIn) {
-    return (
-      <LoginPage
-        onLoginSuccess={() => setIsLoggedIn(true)} // callback when login succeeds
-      />
-    );
+     return <LoginPage onLogin={handleLogin} />;
   }
 
-  // ✅ If logged in, show main dashboard
+  // ✅ If logged in → show full app layout
   return (
-    <div className="d-flex">
-      {/* Sidebar */}
+    <div className="app-container d-flex">
       <Sidebar setPage={setPage} />
-
-      {/* Page Content */}
-      <div className="flex-grow-1 p-4" style={{ background: "#f8f9fa" }}>
-        {renderPage()}
+      <div className="flex-grow-1">
+        <Navbar onLogout={handleLogout} />
+        <div className="page-content mt-5 p-4">{renderPage()}
+      \
+       
+        </div>
       </div>
     </div>
   );
