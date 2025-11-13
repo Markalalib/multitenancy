@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./RoleForm.css";
-import { Card, Button, Row, Col, Form } from "react-bootstrap";
 
-const RoleForm = ({ onSuccess }) => {
+
+const RoleForm = ({ editingId,onSuccess }) => {
   const [formData, setFormData] = useState({
     Role_ID: 0,
     Role_Code: "",
@@ -46,6 +46,52 @@ const RoleForm = ({ onSuccess }) => {
 console.log("TENANT",tenantList);
 console.log("ROLE TYPE",roleTypeList)
 console.log("ROLE LEVEL",roleLevelList)
+
+ const [loading, setLoading] = useState(false);
+ // 🔹 Fetch Role details when editing
+     useEffect(() => {
+    if (!editingId) return;
+
+    const fetchRoleForEdit = async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get(`http://localhost:5000/api/edit/usr_m_role/${editingId}`);
+
+        const record = res.data.data?.[0]; // ✅ Safe extraction
+        if (record) {
+          setFormData({
+            Role_ID: record.Role_ID,
+            Role_Code: record.Role_Code || "",
+            Role_Name: record.Role_Name || "",
+            Role_Description: record.Role_Description || "",
+            Tenant_ID: record.Tenant_ID || "",
+            Role_Type: record.Role_Type || "",
+            Role_Level: record.Role_Level || "",
+            MaxUsers: record.MaxUsers || "",
+            Status: record.Status ?? 1,
+            Valid_From: record.Valid_From
+              ? record.Valid_From.split("T")[0]
+              : "",
+            Valid_To: record.Valid_To
+              ? record.Valid_To.split("T")[0]
+              : "",
+            Notes: record.Notes || "",
+            User: 1,
+          });
+        } else {
+          alert("⚠️ No role details found for the selected ID");
+        }
+      } catch (err) {
+        console.error("❌ Error fetching role details:", err);
+        alert("Failed to load role details. Check console for details.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRoleForEdit();
+  }, [editingId]);
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -97,7 +143,7 @@ console.log("ROLE LEVEL",roleLevelList)
       <div className="row g-3">
         {/* Role Code */}
         <div className="col-md-6">
-          <label className="form-label">Role Code (Auto)</label>
+          <label className="form-label">Role code(Auto)</label>
           <input
             type="text"
             name="Role_Code"

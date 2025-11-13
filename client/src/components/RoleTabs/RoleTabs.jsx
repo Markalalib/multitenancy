@@ -8,18 +8,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const RoleTabs = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [refresh, setRefresh] = useState(false);
-  const [editRole, setEditRole] = useState(null);
+  const [editingId, setEditingId] = useState(null); // store only ID
 
   // handle edit click from grid
   const handleEdit = (role) => {
-    setEditRole(role);
+    setEditingId(role.Role_ID);
     setActiveTab("createEdit");
   };
 
   // handle success (after add/edit)
   const handleSuccess = () => {
     setRefresh((prev) => !prev);
-    setEditRole(null);
+    setEditingId(null);
     setActiveTab("grid");
   };
 
@@ -45,7 +45,7 @@ const RoleTabs = () => {
               <Nav.Link
                 active={activeTab === "grid"}
                 onClick={() => {
-                  setEditRole(null);
+                  setEditingId(null);
                   setActiveTab("grid");
                 }}
               >
@@ -57,7 +57,7 @@ const RoleTabs = () => {
               <Nav.Link
                 active={activeTab === "createEdit"}
                 onClick={() => {
-                  setEditRole(null);
+                  setEditingId(null);
                   setActiveTab("createEdit");
                 }}
               >
@@ -80,7 +80,7 @@ const RoleTabs = () => {
             )}
 
             {activeTab === "createEdit" && (
-              <RoleForm role={editRole} onSuccess={handleSuccess} />
+              <RoleForm editingId={editingId} onSuccess={handleSuccess} />
             )}
           </Card>
         </Col>
