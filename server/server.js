@@ -29,7 +29,8 @@ try {
   const lovRoutes = require("./src/routes/lovRoutes");
   const loginRoutes= require("./src/routes/loginRoutes");
   const editBindMasterRoutes =require("./src/routes/editRoutes");
-  const roleRoutes = require('./src/routes/roleRoutes')
+  const roleRoutes = require('./src/routes/roleRoutes');
+  const userRoutes = require('./src/routes/userRoutes');
 
   app.use("/api/tenants", tenantRoutes);
   app.use("/api/menus", menuRoutes);
@@ -37,9 +38,9 @@ try {
   app.use("/api/login",loginRoutes);
   app.use("/api",editBindMasterRoutes);
   app.use('/api/roles', roleRoutes);
+  app.use('/api/users', userRoutes);
 
-
-  console.log("✅ Tenant routes loaded successfully!");
+  console.log("✅ User routes loaded successfully!");
 } catch (err) {
   console.error("❌ Failed to load routes:", err.message);
 }
