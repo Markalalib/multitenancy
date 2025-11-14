@@ -1,94 +1,139 @@
-/* 🌈 GLOBAL THEME (applies everywhere) */
+/* 🌈 GLOBAL PURPLE THEME */
 :root {
   --main-gradient: linear-gradient(135deg, #7b2ff7, #f107a3);
-  --light-bg: #f8f9ff;
-  --card-bg: rgba(255, 255, 255, 0.9);
-  --shadow: 0 4px 16px rgba(123, 47, 247, 0.15);
-  --border-radius: 12px;
-  --transition: 0.25s ease-in-out;
-  --text-dark: #2d2d2d;
+  --main-color: #7b2ff7;
+  --light-bg: #f7f4ff;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --shadow: 0 8px 24px rgba(123, 47, 247, 0.15);
+  --border-radius: 16px;
+  --transition: 0.3s ease;
+  --text-dark: #2b2b2b;
 }
 
-/* 🌐 Page background */
+/* 🪄 General Page */
 body {
-  background: var(--light-bg);
+  background: linear-gradient(180deg, #f9f6ff 0%, #f2ecff 100%);
   font-family: "Poppins", sans-serif;
   color: var(--text-dark);
+  margin: 0;
 }
 
-/* 🧱 Common container for all pages (RoleForm, TenantForm, etc.) */
+/* 📦 Page Container */
 .page-container {
   background: var(--card-bg);
   border-radius: var(--border-radius);
-  padding: 1.5rem;
+  padding: 2rem;
   box-shadow: var(--shadow);
+  max-width: 1200px;
   margin: 2rem auto;
+  animation: fadeIn 0.6s ease;
 }
 
-/* ✨ Form styling */
-form {
+/* ✨ Form Card */
+.tenant-form-card {
   background: var(--card-bg);
-  padding: 1.5rem;
+  padding: 2rem;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
 }
 
-.form-label {
+/* 🏷️ Labels */
+label {
   font-weight: 600;
-  color: #4a148c;
+  color: #5a189a;
+  display: block;
+  margin-bottom: 0.4rem;
 }
 
-.form-control,
-.form-select,
-textarea {
+/* 🧾 Inputs */
+input,
+textarea,
+select {
+  width: 100%;
+  border: 1px solid #d1b3ff;
   border-radius: var(--border-radius);
-  border: 1px solid #ccc;
+  padding: 0.6rem 0.8rem;
   transition: var(--transition);
+  font-size: 0.95rem;
 }
 
-.form-control:focus,
-.form-select:focus {
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
   border-color: #a56ff7;
-  box-shadow: 0 0 0 0.25rem rgba(165, 111, 247, 0.25);
+  box-shadow: 0 0 0 3px rgba(165, 111, 247, 0.25);
 }
 
 /* 💾 Buttons */
-.btn-primary {
-  background: var(--main-gradient);
-  border: none;
-  box-shadow: var(--shadow);
+.btn {
+  padding: 0.6rem 1.4rem;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  cursor: pointer;
   transition: var(--transition);
 }
+
+.btn-primary {
+  background: var(--main-gradient);
+  color: #fff;
+  border: none;
+  box-shadow: var(--shadow);
+}
+
 .btn-primary:hover {
+  transform: translateY(-2px);
   opacity: 0.9;
 }
 
 .btn-secondary {
-  background: #e0d4fa;
+  background: #ece2ff;
+  color: #5a189a;
   border: none;
-  color: #4a148c;
 }
 
-/* 📋 Table Styling */
-.table {
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  background: white;
+.btn-secondary:hover {
+  background: #e0d4ff;
 }
 
-.table thead {
-  background: var(--main-gradient);
+.btn-clear {
+  background: transparent;
+  color: #7b2ff7;
+  border: 2px solid #7b2ff7;
+}
+
+.btn-clear:hover {
+  background: #7b2ff7;
   color: white;
 }
 
-.table th,
-.table td {
-  vertical-align: middle;
-}
-
-/* 🧾 Page Titles */
-h4, h5 {
+/* 🔤 Headings */
+h4 {
   color: #5b13b9;
   font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* ✨ Small Details */
+.tenant-form-card .d-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gap-3 {
+  gap: 1rem;
+}
+
+/* 🌀 Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 import axios from "axios";
-import "./TenantForm.css"; // custom styling
+import "../../Styles/global.css"; // custom styling
 
 export default function TenantForm({ onSuccess, onClose, editingId }) {
   const [formData, setFormData] = useState({
@@ -121,20 +121,24 @@ export default function TenantForm({ onSuccess, onClose, editingId }) {
   };
 
   return (
-    <div className="tenant-form-container">
+    <div className="page-container">
       <div className="tenant-form-card">
-        <div className="tenant-form-header">
+        <div className="tenant-form-header d-flex justify-between align-center mb-3">
           <h4>{editingId ? "Edit Tenant" : "Create Tenant"}</h4>
-          <button className="close-btn" onClick={onClose}>×</button>
+          <button type = "button" className="btn btn-secondary   " onClick={onClose}
+           style={{ borderRadius: "50%", padding: "0.3rem 0.7rem" }}>
+            ×
+            </button>
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div className="form-grid">
+          <div className="row g-3">
             {/* Tenant Name */}
-            <div className="form-group">
-              <label>Tenant Name *</label>
+            <div className="form-col-md-6">
+              <label className="form-label">Tenant Name *</label>
               <input
                 type="text"
+                className="form-control"
                 name="p_Tenant_Name"
                 value={formData.p_Tenant_Name}
                 onChange={handleChange}
@@ -142,10 +146,11 @@ export default function TenantForm({ onSuccess, onClose, editingId }) {
               />
             </div>
 
-            <div className="form-group">
+            <div className="col-md-6">
               <label>Short Name</label>
               <input
                 type="text"
+                className="form-control"
                 name="p_Tenant_Short_Name"
                 value={formData.p_Tenant_Short_Name}
                 onChange={handleChange}
@@ -153,10 +158,11 @@ export default function TenantForm({ onSuccess, onClose, editingId }) {
               />
             </div>
 
-            <div className="form-group full-width">
+            <div className="col-12 ">
               <label>Address *</label>
               <input
                 type="text"
+                  className="form-control"
                 name="p_Tenant_Address1"
                 value={formData.p_Tenant_Address1}
                 onChange={handleChange}
@@ -164,10 +170,11 @@ export default function TenantForm({ onSuccess, onClose, editingId }) {
               />
             </div>
 
-            <div className="form-group">
+            <div className="col-md-4">
               <label>City</label>
               <input
                 type="text"
+                 className="form-control"
                 name="p_Tenant_City"
                 value={formData.p_Tenant_City}
                 onChange={handleChange}
@@ -175,10 +182,11 @@ export default function TenantForm({ onSuccess, onClose, editingId }) {
               />
             </div>
 
-            <div className="form-group">
+            <div className="col-md-4">
               <label>Country *</label>
               <input
                 type="text"
+                 className="form-control"
                 name="p_Tenant_Country"
                 value={formData.p_Tenant_Country}
                 onChange={handleChange}
@@ -190,6 +198,7 @@ export default function TenantForm({ onSuccess, onClose, editingId }) {
               <label>State *</label>
               <input
                 type="text"
+                 className="form-control"
                 name="p_Tenant_State"
                 value={formData.p_Tenant_State}
                 onChange={handleChange}
@@ -197,10 +206,11 @@ export default function TenantForm({ onSuccess, onClose, editingId }) {
               />
             </div>
 
-            <div className="form-group">
+            <div className="col-md-4">
               <label>Zip Code</label>
               <input
                 type="text"
+                 className="form-control"
                 name="p_Tenant_ZipCode"
                 value={formData.p_Tenant_ZipCode}
                 onChange={handleChange}
@@ -208,10 +218,11 @@ export default function TenantForm({ onSuccess, onClose, editingId }) {
               />
             </div>
 
-            <div className="form-group">
+            <div className="col-md-4">
               <label>Primary Phone *</label>
               <input
                 type="text"
+                 className="form-control"
                 name="p_Tenant_Phone1"
                 value={formData.p_Tenant_Phone1}
                 onChange={handleChange}
@@ -219,10 +230,11 @@ export default function TenantForm({ onSuccess, onClose, editingId }) {
               />
             </div>
 
-            <div className="form-group">
+            <div className="col-md-4">
               <label>Office Phone</label>
               <input
                 type="text"
+                 className="form-control"
                 name="p_Tenant_Phone2"
                 value={formData.p_Tenant_Phone2}
                 onChange={handleChange}
@@ -230,10 +242,11 @@ export default function TenantForm({ onSuccess, onClose, editingId }) {
               />
             </div>
 
-            <div className="form-group">
+            <div className="col-md-4">
               <label>Alternate Phone</label>
               <input
                 type="text"
+                 className="form-control"
                 name="p_Tenant_Phone3"
                 value={formData.p_Tenant_Phone3}
                 onChange={handleChange}
@@ -241,10 +254,11 @@ export default function TenantForm({ onSuccess, onClose, editingId }) {
               />
             </div>
 
-            <div className="form-group">
+            <div className="fcol-md-6">
               <label>Email *</label>
               <input
                 type="email"
+                 className="form-control"
                 name="p_Tenant_Contact_Email"
                 value={formData.p_Tenant_Contact_Email}
                 onChange={handleChange}
@@ -252,10 +266,11 @@ export default function TenantForm({ onSuccess, onClose, editingId }) {
               />
             </div>
 
-            <div className="form-group">
+            <div className="col-md-6">
               <label>Website</label>
               <input
                 type="text"
+                 className="form-control"
                 name="p_Tenant_Website"
                 value={formData.p_Tenant_Website}
                 onChange={handleChange}
@@ -263,25 +278,27 @@ export default function TenantForm({ onSuccess, onClose, editingId }) {
               />
             </div>
 
-            <div className="form-group">
+            <div className="col-md-6">
               <label>Logo</label>
-              <input type="file" name="p_Tenant_Logo" onChange={handleChange} />
+              <input type="file"  className="form-control" name="p_Tenant_Logo" onChange={handleChange} />
             </div>
 
-            <div className="form-group">
+            <div className="col-md-6">
               <label>Founded Date</label>
               <input
                 type="date"
+                 className="form-control"
                 name="p_Tenant_Founded_Date"
                 value={formData.p_Tenant_Founded_Date}
                 onChange={handleChange}
               />
             </div>
 
-            <div className="form-group">
+            <div className="col-md-6">
               <label>Max Plant Count</label>
               <input
                 type="number"
+                 className="form-control"
                 name="p_Max_Plant_Count"
                 value={formData.p_Max_Plant_Count}
                 onChange={handleChange}
@@ -289,22 +306,24 @@ export default function TenantForm({ onSuccess, onClose, editingId }) {
               />
             </div>
 
-            <div className="form-group checkbox">
+            <div className="col-md-6 d-flex align-items-center mt-4">
               <label>
                 <input
                   type="checkbox"
                   name="p_Tenant_Is_Approved"
                   checked={formData.p_Tenant_Is_Approved === 1}
                   onChange={handleChange}
+                    className="form-check-input me-2"
                 />
                 Approved
               </label>
             </div>
 
-            <div className="form-group full-width">
+            <div className="col-12">
               <label>Notes</label>
               <textarea
                 name="p_Notes"
+                  className="form-control"
                 value={formData.p_Notes}
                 onChange={handleChange}
                 rows="3"
@@ -313,12 +332,12 @@ export default function TenantForm({ onSuccess, onClose, editingId }) {
             </div>
           </div>
 
-          <div className="form-actions">
-            <button type="submit" className="btn-save">Save Tenant</button>
+          <div className="d-flex gap-3 justify-content-end mt-4">
+            <button type="submit" className="btn btn-primary">Save Tenant</button>
             <button type="button" onClick={handleClear} className="btn-clear">
               Clear
             </button>
-            <button type="button" onClick={onClose} className="btn-cancel">
+            <button type="button" onClick={onClose} className="btn btn-secondary">
               Cancel
             </button>
           </div>
